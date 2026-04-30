@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: rgba(26,58,140,0.11);
+  --color-input: rgba(26,58,140,0.11);
+  --color-ring: var(--navy);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+
+  --color-primary: var(--navy);
+  --color-primary-foreground: var(--white);
+
+  --color-secondary: var(--bg-alt);
+  --color-secondary-foreground: var(--navy);
+
+  --color-muted: var(--bg-alt);
+  --color-muted-foreground: var(--muted);
+
+  --color-accent: var(--green);
+  --color-accent-foreground: var(--white);
+
+  --color-popover: var(--white);
+  --color-popover-foreground: var(--text);
+
+  --color-card: var(--white);
+  --color-card-foreground: var(--text);
+
+  --shadow-sm: 0 1px 3px rgba(26,58,140,0.08), 0 4px 16px rgba(26,58,140,0.06);
+  --shadow-md: 0 4px 24px rgba(26,58,140,0.14), 0 1px 4px rgba(26,58,140,0.08);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  --white: #ffffff;
+  --bg: #F5F7FA;
+  --bg-alt: #EEF2FB;
+  --navy: #003768;
+  --navy-mid: #004d91;
+  --green: #45932C;
+  --green-light: #5ba344;
+  --steel: #2E6BB0;
+  --muted: #6B7A99;
+  --text: #0F1C3F;
+  --radius: 0.5rem;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
