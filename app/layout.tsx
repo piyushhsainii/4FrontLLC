@@ -1,6 +1,7 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css'; // Global styles
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,10 +14,13 @@ export const metadata: Metadata = {
   description: 'Reliable roofing, built to protect what matters most.',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
-      <body className="font-sans font-light tracking-tighter antialiased" suppressHydrationWarning>{children}</body>
+      <body className="font-sans font-light tracking-tighter antialiased" suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

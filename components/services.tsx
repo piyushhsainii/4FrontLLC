@@ -44,12 +44,12 @@ export function Services() {
               className={`group relative overflow-hidden rounded-3xl border border-black/5 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] ${idx === 1 || idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
             >
-              <div className="relative mb-6 h-60 w-full overflow-hidden rounded-2xl md:h-auto shadow-inner">
+              <div className="relative mb-6 h-60 w-full overflow-hidden rounded-2xl md:h-80 shadow-inner">
                 {/* Image Placeholder */}
                 <img
                   src={service.imagePlaceholder}
                   alt={service.title}
-                  className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105 "
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 "
                   referrerPolicy="no-referrer"
                 />
                 {/* Vignette Overlay on Hover */}

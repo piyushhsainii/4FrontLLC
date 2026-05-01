@@ -2,7 +2,7 @@ import React from 'react';
 
 export function Hero() {
   return (
-    <section className="relative z-10 flex h-[100vh] max-h-[800px] flex-col justify-center px-6 pt-24 text-center">
+    <section className="relative z-10 flex h-[100vh] max-h-[800px] flex-col justify-center px-6 pt-24 text-center mt-20 lg:mt-0">
       <div className="mx-auto max-w-4xl">
         <div className="mb-6 flex flex-wrap items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-widest text-primary md:text-xs">
           <span className="rounded-full bg-primary/10 px-3 py-1">Fast Estimates</span>

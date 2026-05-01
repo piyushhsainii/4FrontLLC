@@ -146,8 +146,13 @@ export function InteractiveGridBg() {
     const rand = mulberry32(0xDEADBEEF);
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const parent = canvas.parentElement;
+      if (!parent) return;
+
+      const rect = parent.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
       initPoints();
     };
 
@@ -185,7 +190,11 @@ export function InteractiveGridBg() {
       }
     };
 
-    const handleMouseMove = (e: MouseEvent) => { mouseRef.current.x = e.clientX; mouseRef.current.y = e.clientY; };
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current.x = e.clientX - rect.left;
+      mouseRef.current.y = e.clientY - rect.top;
+    };
     const handleMouseLeave = () => { mouseRef.current.x = -9999; mouseRef.current.y = -9999; };
 
     const draw = () => {
@@ -280,8 +289,7 @@ export function InteractiveGridBg() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 h-full w-full"
-      style={{ background: 'transparent' }}
+      className="pointer-events-none absolute inset-0 w-full h-full z-0 hidden lg:block" style={{ background: 'transparent' }}
     />
   );
 }

@@ -27,9 +27,7 @@ export function Header() {
     <header
       className={cn(
         'fixed left-0 right-0 top-0 z-50 bg-white transition-all duration-300',
-        isScrolled
-          ? 'bg-background/80 py-3 shadow-sm backdrop-blur-md'
-          : 'bg-transparent py-5'
+        'bg-background/80 py-3 shadow-sm backdrop-blur-md'
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 xl:px-0 text-foreground">
