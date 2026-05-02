@@ -11,6 +11,7 @@ import { Process } from '@/components/process';
 import { CallToAction } from '@/components/cta-section';
 import { Footer } from '@/components/footer';
 import { MapFooter } from '@/components/map-footer';
+import ProjectShowcase from '@/components/project-showcase';
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
 
         <Services />
         <WhyChoose />
+        <ProjectShowcase />
         <Process />
         <Testimonials />
         <CallToAction />

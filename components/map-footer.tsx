@@ -25,8 +25,6 @@ export function MapFooter() {
     const [mapLoaded, setMapLoaded] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // ── Bug fix: iframe onLoad is unreliable inside sandboxed iframes.
-    // We set a 3.5 s fallback that force-resolves the loader regardless.
     useEffect(() => {
         timerRef.current = setTimeout(() => setMapLoaded(true), 3500);
         return () => { if (timerRef.current) clearTimeout(timerRef.current); };
@@ -50,7 +48,7 @@ export function MapFooter() {
                 <div
                     className="footer-brand-panel"
                     style={{
-                        width: '100%',           // overridden to 30% at ≥1024px via CSS
+                        width: '100%',
                         flexShrink: 0,
                         display: 'flex',
                         flexDirection: 'column',
@@ -62,7 +60,6 @@ export function MapFooter() {
                         overflow: 'hidden',
                     }}
                 >
-                    {/* Subtle corner glow */}
                     <div style={{
                         position: 'absolute', bottom: -80, left: -80,
                         width: 280, height: 280,
@@ -116,9 +113,24 @@ export function MapFooter() {
                     {/* Contact rows */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 32 }}>
                         {([
-                            { icon: '📞', label: 'Phone', node: <a href="tel:+1234567890" style={{ fontSize: 13.5, fontWeight: 600, color: T.navy, textDecoration: 'none' }}>+1 (234) 567-890</a> },
-                            { icon: '✉️', label: 'Email', node: <a href="mailto:info@4frontcls.com" style={{ fontSize: 13, fontWeight: 500, color: T.navy, textDecoration: 'none' }}>info@4frontcls.com</a> },
-                            { icon: '📍', label: 'Service Area', node: <span style={{ fontSize: 13, color: T.muted }}>Greater Metro Region &amp; Surrounding Counties</span> },
+                            {
+                                icon: '📞', label: 'Phone', node: (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                                        <a href="tel:+18132945498" style={{ fontSize: 13.5, fontWeight: 600, color: T.navy, textDecoration: 'none' }}>+1 (813) 294-5498</a>
+                                        <a href="tel:+15136460333" style={{ fontSize: 13.5, fontWeight: 600, color: T.navy, textDecoration: 'none' }}>+1 (513) 646-0333</a>
+                                    </div>
+                                )
+                            },
+                            {
+                                icon: '✉️', label: 'Email', node: (
+                                    <a href="mailto:operations@fourfrontllc.com" style={{ fontSize: 13, fontWeight: 500, color: T.navy, textDecoration: 'none' }}>operations@fourfrontllc.com</a>
+                                )
+                            },
+                            {
+                                icon: '📍', label: 'Service Area', node: (
+                                    <span style={{ fontSize: 13, color: T.muted }}>Greater Cincinnati Metro Region &amp; Surrounding Counties</span>
+                                )
+                            },
                         ] as const).map(({ icon, label, node }) => (
                             <div key={label} style={{ display: 'flex', gap: 11, alignItems: 'flex-start' }}>
                                 <span style={{ fontSize: 14, marginTop: 1, flexShrink: 0 }}>{icon}</span>
@@ -153,7 +165,6 @@ export function MapFooter() {
                     className="footer-map-panel"
                     style={{ position: 'relative', overflow: 'hidden', background: T.bgAlt, flex: 1, minHeight: 380 }}
                 >
-                    {/* Loader — shown until mapLoaded = true */}
                     <div
                         style={{
                             position: 'absolute', inset: 0, zIndex: 10,
@@ -166,7 +177,6 @@ export function MapFooter() {
                             transition: 'opacity 0.4s ease',
                         }}
                     >
-                        {/* Spinner */}
                         <div style={{
                             width: 48, height: 48, borderRadius: '50%',
                             border: `3px solid rgba(26,58,140,0.1)`,
@@ -177,7 +187,6 @@ export function MapFooter() {
                             <div style={{ fontSize: 13, fontWeight: 600, color: T.navy, marginBottom: 4 }}>Loading Map</div>
                             <div style={{ fontSize: 11.5, color: T.muted, letterSpacing: '0.3px' }}>Fourfront Construction</div>
                         </div>
-                        {/* Bounce dots */}
                         <div style={{ display: 'flex', gap: 6 }}>
                             {[0, 1, 2].map((i) => (
                                 <div key={i} style={{
@@ -188,11 +197,9 @@ export function MapFooter() {
                         </div>
                     </div>
 
-                    {/* Soft edge blends */}
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 40, zIndex: 2, background: `linear-gradient(to bottom,${T.bgAlt},transparent)`, pointerEvents: 'none' }} />
                     <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 40, zIndex: 2, background: `linear-gradient(to right,${T.bgAlt},transparent)`, pointerEvents: 'none' }} />
 
-                    {/* Location pill — appears after load */}
                     {mapLoaded && (
                         <div style={{
                             position: 'absolute', top: 16, right: 16, zIndex: 3,
@@ -262,9 +269,11 @@ export function MapFooter() {
                         <div>
                             <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Contact</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
-                                <li><a href="tel:+1234567890" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>+1 (234) 567-890</a></li>
-                                <li><a href="mailto:info@4frontcls.com" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>info@4frontcls.com</a></li>
-                                <li><span style={{ fontSize: 13, color: T.mutedLight }}>Greater Metro Region</span></li>
+                                <li><a href="tel:+18132945498" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>+1 (813) 294-5498</a></li>
+                                <li><a href="tel:+15136460333" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>+1 (513) 646-0333</a></li>
+                                <li><a href="mailto:operations@fourfrontllc.com" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>operations@fourfrontllc.com</a></li>
+                                <li><span style={{ fontSize: 13, color: T.mutedLight }}>Greater Cincinnati Metro Region</span></li>
+                                <li><span style={{ fontSize: 13, color: T.mutedLight }}>&amp; Surrounding Counties</span></li>
                             </ul>
                         </div>
 
@@ -312,7 +321,6 @@ export function MapFooter() {
         .footer-link:hover { color: #1A3A8C !important; }
         .footer-cta-btn:hover { background: #2252B8 !important; transform: translateY(-1px) !important; box-shadow: 0 6px 22px rgba(26,58,140,0.28) !important; }
 
-        /* 30/70 layout at lg */
         @media (min-width: 1024px) {
           .footer-map-row   { flex-direction: row !important; }
           .footer-brand-panel { width: 30% !important; }
