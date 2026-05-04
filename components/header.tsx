@@ -10,43 +10,63 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+function scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+const navLinks = [
+  { label: 'Services', id: 'services' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Process', id: 'process' },
+  { label: 'Contact', id: 'contact' },
+];
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // make the header a bit translucent when scrolled more than 20
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNav = (id: string) => {
+    setIsMobileMenuOpen(false);
+    // Small delay lets the mobile menu close before scrolling
+    setTimeout(() => scrollTo(id), 10);
+  };
+
   return (
     <header
       className={cn(
-        'fixed left-0 right-0 top-0 z-50 bg-white transition-all duration-300',
+        'fixed left-0 right-0 top-0 z-50 transition-all duration-300',
         'bg-background/80 py-3 shadow-sm backdrop-blur-md'
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-3 xl:px-0 text-foreground">
         <Link href="/" className="flex flex-col group">
-          <img src="/LLC_LOGO.png" className='h-18 w-auto' alt="" />
+          <img src="/LLC_LOGO.png" className="h-18 w-auto" alt="" />
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-8 md:flex">
-          <Link href="#services" className="text-sm font-medium hover:text-primary transition-colors">Services</Link>
-          <Link href="#projects" className="text-sm font-medium hover:text-primary transition-colors">Projects</Link>
-          <Link href="#process" className="text-sm font-medium hover:text-primary transition-colors">Process</Link>
-          <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
-          <a
-            href="#contact"
+          {navLinks.map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => handleNav(id)}
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              {label}
+            </button>
+          ))}
+          <button
+            onClick={() => handleNav('contact')}
             className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-accent-foreground transition-all hover:bg-accent/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
           >
             Call Now
-          </a>
+          </button>
         </nav>
 
         {/* Mobile Toggle */}
@@ -62,17 +82,21 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="absolute left-0 right-0 top-full bg-background border-b border-border p-6 shadow-xl md:hidden">
           <div className="flex flex-col gap-4">
-            <Link href="#services" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium">Services</Link>
-            <Link href="#projects" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium">Projects</Link>
-            <Link href="#process" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium">Process</Link>
-            <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium">Contact</Link>
-            <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
+            {navLinks.map(({ label, id }) => (
+              <button
+                key={id}
+                onClick={() => handleNav(id)}
+                className="text-left text-lg font-medium hover:text-primary transition-colors"
+              >
+                {label}
+              </button>
+            ))}
+            <button
+              onClick={() => handleNav('contact')}
               className="mt-4 rounded-full bg-accent px-6 py-3 text-center text-sm font-medium text-accent-foreground"
             >
               Call Now
-            </a>
+            </button>
           </div>
         </div>
       )}

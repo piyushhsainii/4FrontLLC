@@ -107,9 +107,6 @@ function Lightbox({
     );
 }
 
-// ─── Carousel ─────────────────────────────────────────────────────────────────
-// Unified carousel for all breakpoints. Shows 2 cards + a peek of the next.
-// Cards are center-aligned; the active pair sits dead-centre in the track.
 function PhotoCarousel({ onOpenLightbox }: { onOpenLightbox: (i: number) => void }) {
     const [page, setPage] = useState(0);
     const [dragging, setDragging] = useState(false);
@@ -277,7 +274,6 @@ function ReelEmbed() {
     );
 }
 
-// ─── Single photo card ─────────────────────────────────────────────────────────
 function PhotoCard({
     photo,
     index,
@@ -313,10 +309,8 @@ function PhotoCard({
             <img
                 src={photo.src}
                 alt={photo.alt}
-                onLoad={() => setLoaded(true)}
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{
-                    opacity: loaded ? 1 : 0,
                     transition: "opacity 0.4s ease",
                 }}
                 draggable={false}
@@ -419,31 +413,31 @@ export default function ProjectShowcase() {
                             className="relative mx-auto"
                             style={{
                                 width: 295,
-                                background: "#0A0A0F",
+                                background: "#E8E8ED",
                                 borderRadius: 44,
                                 padding: "12px 8px",
                                 boxShadow: `
-                0 0 0 1.5px #2A2A35,
-                0 0 0 3px #0A0A0F,
-                0 0 0 4px #333340,
-                0 28px 60px rgba(0,0,0,0.45),
-                0 8px 20px rgba(0,0,0,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.08)
-            `,
+            0 0 0 1.5px #C8C8D0,
+            0 0 0 3px #E8E8ED,
+            0 0 0 4px #B8B8C2,
+            0 28px 60px rgba(0,0,0,0.18),
+            0 8px 20px rgba(0,0,0,0.10),
+            inset 0 1px 0 rgba(255,255,255,0.9)
+        `,
                             }}
                         >
                             {/* Side buttons — volume */}
-                            <div style={{ position: "absolute", left: -3, top: 88, width: 3, height: 28, background: "#1E1E28", borderRadius: "2px 0 0 2px" }} />
-                            <div style={{ position: "absolute", left: -3, top: 124, width: 3, height: 28, background: "#1E1E28", borderRadius: "2px 0 0 2px" }} />
+                            <div style={{ position: "absolute", left: -3, top: 88, width: 3, height: 28, background: "#C0C0C8", borderRadius: "2px 0 0 2px" }} />
+                            <div style={{ position: "absolute", left: -3, top: 124, width: 3, height: 28, background: "#C0C0C8", borderRadius: "2px 0 0 2px" }} />
                             {/* Side button — power */}
-                            <div style={{ position: "absolute", right: -3, top: 108, width: 3, height: 52, background: "#1E1E28", borderRadius: "0 2px 2px 0" }} />
+                            <div style={{ position: "absolute", right: -3, top: 108, width: 3, height: 52, background: "#C0C0C8", borderRadius: "0 2px 2px 0" }} />
 
                             {/* Screen bezel */}
                             <div
                                 style={{
                                     borderRadius: 36,
                                     overflow: "hidden",
-                                    background: "#000",
+                                    background: "#fff",
                                     position: "relative",
                                 }}
                             >
@@ -451,7 +445,7 @@ export default function ProjectShowcase() {
                                 <div
                                     style={{
                                         height: 44,
-                                        background: "#000",
+                                        background: "#fff",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "space-between",
@@ -468,42 +462,38 @@ export default function ProjectShowcase() {
                                         transform: "translateX(-50%)",
                                         width: 88,
                                         height: 24,
-                                        background: "#000",
+                                        background: "#111",
                                         borderRadius: 20,
-                                        border: "1.5px solid #1a1a1a",
                                     }} />
 
-                                    <span style={{ fontSize: 11, fontWeight: 600, color: "white", letterSpacing: 0.2 }}>9:41</span>
+                                    <span style={{ fontSize: 11, fontWeight: 600, color: "#111", letterSpacing: 0.2 }}>9:41</span>
                                     <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                                         {/* Signal */}
-                                        <svg width="15" height="10" viewBox="0 0 15 10" fill="white">
-                                            <rect x="0" y="6" width="2.5" height="4" rx="0.5" opacity="0.4" />
-                                            <rect x="3.2" y="4" width="2.5" height="6" rx="0.5" opacity="0.6" />
-                                            <rect x="6.4" y="2" width="2.5" height="8" rx="0.5" opacity="0.8" />
+                                        <svg width="15" height="10" viewBox="0 0 15 10" fill="#111">
+                                            <rect x="0" y="6" width="2.5" height="4" rx="0.5" opacity="0.3" />
+                                            <rect x="3.2" y="4" width="2.5" height="6" rx="0.5" opacity="0.5" />
+                                            <rect x="6.4" y="2" width="2.5" height="8" rx="0.5" opacity="0.75" />
                                             <rect x="9.6" y="0" width="2.5" height="10" rx="0.5" />
                                         </svg>
                                         {/* Wifi */}
-                                        <svg width="14" height="10" viewBox="0 0 14 10" fill="white">
+                                        <svg width="14" height="10" viewBox="0 0 14 10" fill="#111">
                                             <path d="M7 8.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                                            <path d="M3.5 5.8C4.6 4.7 5.7 4 7 4s2.4.7 3.5 1.8l1.2-1.2C10.2 3.1 8.7 2.3 7 2.3S3.8 3.1 2.3 4.6l1.2 1.2z" opacity="0.7" />
-                                            <path d="M.8 3.1C2.4 1.5 4.6.5 7 .5s4.6 1 6.2 2.6l1.2-1.2C12.4.7 9.9-.3 7-.3S1.6.7.3 1.9L.8 3.1z" opacity="0.4" />
+                                            <path d="M3.5 5.8C4.6 4.7 5.7 4 7 4s2.4.7 3.5 1.8l1.2-1.2C10.2 3.1 8.7 2.3 7 2.3S3.8 3.1 2.3 4.6l1.2 1.2z" opacity="0.6" />
+                                            <path d="M.8 3.1C2.4 1.5 4.6.5 7 .5s4.6 1 6.2 2.6l1.2-1.2C12.4.7 9.9-.3 7-.3S1.6.7.3 1.9L.8 3.1z" opacity="0.35" />
                                         </svg>
                                         {/* Battery */}
                                         <div style={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                            <div style={{ width: 20, height: 10, border: "1.2px solid rgba(255,255,255,0.6)", borderRadius: 2.5, padding: 1.5, display: "flex", alignItems: "center" }}>
-                                                <div style={{ width: "80%", height: "100%", background: "white", borderRadius: 1 }} />
+                                            <div style={{ width: 20, height: 10, border: "1.2px solid rgba(0,0,0,0.35)", borderRadius: 2.5, padding: 1.5, display: "flex", alignItems: "center" }}>
+                                                <div style={{ width: "80%", height: "100%", background: "#111", borderRadius: 1 }} />
                                             </div>
-                                            <div style={{ width: 2, height: 5, background: "rgba(255,255,255,0.5)", borderRadius: "0 1px 1px 0" }} />
+                                            <div style={{ width: 2, height: 5, background: "rgba(0,0,0,0.3)", borderRadius: "0 1px 1px 0" }} />
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* iframe */}
-                                {/* iframe — focus-scroll fix */}
                                 <div
                                     style={{ position: "relative", lineHeight: 0 }}
                                     onClick={() => {
-                                        // Lock scroll position for 800ms after any click in this zone
                                         const x = window.scrollX;
                                         const y = window.scrollY;
                                         const lock = () => window.scrollTo(x, y);
@@ -511,22 +501,11 @@ export default function ProjectShowcase() {
                                         setTimeout(() => window.removeEventListener("scroll", lock), 800);
                                     }}
                                 >
-                                    {/* <iframe
-                                        src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2479773449123567%2F&show_text=false&width=267&t=0"
-                                        width="279"
-                                        height="476"
-                                        style={{ border: "none", overflow: "hidden", display: "block" }}
-                                        scrolling="no"
-                                        frameBorder="0"
-                                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                                        allowFullScreen
-                                        title="4Front Construction project reel"
-                                    /> */}
                                     <ReelEmbed />
                                 </div>
-                                {/* Home indicator */}
-                                <div style={{ height: 28, background: "#000", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                    <div style={{ width: 100, height: 4, background: "rgba(255,255,255,0.3)", borderRadius: 2 }} />
+
+                                <div style={{ height: 28, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                    <div style={{ width: 100, height: 4, background: "rgba(0,0,0,0.15)", borderRadius: 2 }} />
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,13 @@
 import React from 'react';
+import { BackgroundPattern } from './InteractiveePattern';
 
 export function Hero() {
   return (
     <section className="relative z-10 flex h-[100vh] max-h-[800px] flex-col justify-center px-6 pt-24 text-center mt-20 lg:mt-0">
-      <div className="mx-auto max-w-4xl">
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
+        <BackgroundPattern />
+      </div>
+      <div className="mx-auto max-w-4xl z-10">
         <div className="mb-6 flex flex-wrap items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-widest text-primary md:text-xs">
           <span className="rounded-full bg-primary/10 px-3 py-1">Fast Estimates</span>
           <span className="hidden h-1 w-1 rounded-full bg-primary md:block" />

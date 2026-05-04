@@ -5,74 +5,101 @@ const services = [
     title: 'Roof Repair',
     description: 'Stop leaks quickly and prevent further damage before costs escalate.',
     imagePlaceholder: '/roof_repair.jpeg',
+    label: '01 — Repairs',
   },
   {
     title: 'Roof Replacement',
-    description: 'Full roof replacements built for durability and long-term performance.',
+    description: 'Full replacements built for durability and long-term performance.',
     imagePlaceholder: '/roof_replacement.jpeg',
+    label: '02 — Replacement',
   },
   {
     title: 'New Installation',
-    description: 'Clean, professional installations for new builds and renovations.',
+    description: 'Professional installs for new builds and renovations.',
     imagePlaceholder: '/roof_installation.jpeg',
+    label: '03 — Installation',
   },
   {
     title: 'Storm Response',
     description: 'Fast response for hail, wind, and emergency roofing issues.',
     imagePlaceholder: '/roof_strom.jpeg',
+    label: '04 — Emergency',
   },
   {
     title: 'Insurance Help',
-    description: 'We help simplify and guide the insurance claim process.',
+    description: 'We simplify and guide the insurance claim process.',
     imagePlaceholder: '/roof_insurance.jpeg',
+    label: '05 — Claims',
   },
 ];
+
+const gridClasses = [
+  'col-span-12 md:[grid-column:1/6] md:[grid-row:1/3]',
+  'col-span-12 md:[grid-column:6/10] md:[grid-row:1/2]',
+  'col-span-12 md:[grid-column:10/13] md:[grid-row:1/2]',
+  'col-span-12 md:[grid-column:6/10] md:[grid-row:2/3]',
+  'col-span-12 md:[grid-column:10/13] md:[grid-row:2/3]',
+];
+
 export function Services() {
   return (
-    <section id="services" className="relative z-10 bg-background py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-16 md:mb-24">
-          <h2 className="mb-6 max-w-3xl text-balance text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
-            Roofing services built for speed, reliability, and long-term protection.
+    <section id="services" className="bg-background px-6 py-20 md:px-10">
+      <div className="mx-auto max-w-7xl">
+
+        {/* Header */}
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-8">
+          <h2 className="font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground">
+            Fast roofing.<br />
+            <span className="text-primary">Done right.</span>
           </h2>
+          <p className="max-w-[200px] text-right text-sm leading-relaxed text-muted-foreground">
+            Five specialist services — from emergency repairs to full new installs.
+          </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-12 md:[grid-auto-rows:240px] gap-3">
           {services.map((service, idx) => (
             <div
               key={idx}
-              className={`group relative overflow-hidden rounded-3xl border border-black/5 bg-white p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] ${idx === 1 || idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''
-                }`}
+              className={`group relative overflow-hidden rounded-2xl border border-border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-md min-h-[240px] ${gridClasses[idx]}`}
             >
-              <div className="relative mb-6 h-60 w-full overflow-hidden rounded-2xl md:h-80 shadow-inner">
-                {/* Image Placeholder */}
+              {/* Image fills the card */}
+              <div className="absolute inset-0">
                 <img
                   src={service.imagePlaceholder}
                   alt={service.title}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 "
-                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                {/* Vignette Overlay on Hover */}
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
 
-              <h3 className="mb-2 text-2xl font-semibold tracking-tight text-foreground">{service.title}</h3>
-              <p className="text-muted-foreground">{service.description}</p>
+              {/* Strong bottom-up vignette for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,22,55,0.88)] via-[rgba(0,22,55,0.3)] to-transparent" />
 
-              <div className="mt-6 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <svg
-                  className="h-5 w-5 -rotate-45 transition-transform duration-300 group-hover:rotate-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              {/* Subtle top fade so arrow stays readable too */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[rgba(0,22,55,0.25)] via-transparent to-transparent" />
+
+              {/* Arrow */}
+              <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/10 transition-all duration-300 group-hover:rotate-45 group-hover:bg-primary">
+                <svg className="h-3.5 w-3.5 stroke-white" fill="none" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
+              </div>
+
+              {/* Text */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="mb-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-white/55">{service.label}</p>
+                <h3 className="font-display text-lg font-bold leading-tight text-white drop-shadow-sm">{service.title}</h3>
+                <p className="mt-0 max-h-0 overflow-hidden text-xs leading-relaxed text-white/70 opacity-0 transition-all duration-300 group-hover:mt-1.5 group-hover:max-h-14 group-hover:opacity-100">
+                  {service.description}
+                </p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
+
     </section>
   );
 }
