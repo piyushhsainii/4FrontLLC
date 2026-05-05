@@ -20,6 +20,22 @@ const T = {
     mutedLight: '#9BAAC4',
 };
 
+// Map display labels → section IDs from the app layout
+const SECTION_IDS: Record<string, string> = {
+    'Services': 'services',
+    'Projects': 'projects',
+    'Process': 'process',
+    'Testimonials': 'testimonials',
+    'Contact': 'contact',
+};
+
+function scrollToSection(id: string) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
 export function MapFooter() {
     const currentYear = new Date().getFullYear();
     const [mapLoaded, setMapLoaded] = useState(false);
@@ -142,22 +158,23 @@ export function MapFooter() {
                         ))}
                     </div>
 
-                    {/* CTA button */}
-                    <Link
-                        href="#contact"
+                    {/* CTA button — scrolls to #contact */}
+                    <button
+                        onClick={() => scrollToSection('contact')}
                         className="footer-cta-btn"
                         style={{
                             display: 'inline-flex', alignItems: 'center', gap: 8,
                             background: T.navy, color: '#fff',
                             padding: '12px 22px', borderRadius: 100,
-                            fontSize: 13, fontWeight: 700, textDecoration: 'none',
+                            fontSize: 13, fontWeight: 700,
+                            border: 'none', cursor: 'pointer',
                             alignSelf: 'flex-start',
                             boxShadow: '0 4px 18px rgba(26,58,140,0.22)',
                             transition: 'background 0.2s, transform 0.15s, box-shadow 0.2s',
                         }}
                     >
                         Get Free Inspection →
-                    </Link>
+                    </button>
                 </div>
 
                 {/* ── 70% Google Map ─────────────────────────────────────── */}
@@ -250,7 +267,15 @@ export function MapFooter() {
                             <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Services</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
                                 {['Roof Repair', 'Roof Replacement', 'New Installation', 'Storm Response', 'Insurance Help'].map((s) => (
-                                    <li key={s}><Link href="#services" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>{s}</Link></li>
+                                    <li key={s}>
+                                        <button
+                                            onClick={() => scrollToSection('services')}
+                                            className="footer-link"
+                                            style={{ fontSize: 13, color: T.muted, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                        >
+                                            {s}
+                                        </button>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -259,8 +284,16 @@ export function MapFooter() {
                         <div>
                             <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Company</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
-                                {['Projects', 'Process', 'Testimonials', 'Contact'].map((s) => (
-                                    <li key={s}><Link href={`#${s.toLowerCase()}`} className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>{s}</Link></li>
+                                {(['Projects', 'Process', 'Testimonials', 'Contact'] as const).map((label) => (
+                                    <li key={label}>
+                                        <button
+                                            onClick={() => scrollToSection(SECTION_IDS[label])}
+                                            className="footer-link"
+                                            style={{ fontSize: 13, color: T.muted, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                        >
+                                            {label}
+                                        </button>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -281,8 +314,8 @@ export function MapFooter() {
                         <div>
                             <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Legal</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
-                                <li><Link href="#" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Privacy Policy</Link></li>
-                                <li><Link href="#" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Terms of Service</Link></li>
+                                <li><Link href="/privacy" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Terms of Service</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -297,8 +330,8 @@ export function MapFooter() {
                             &copy; {currentYear} 4Front Construction and Logistics Services. All rights reserved.
                         </p>
                         <div style={{ display: 'flex', gap: 16 }}>
-                            <Link href="#" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Privacy Policy</Link>
-                            <Link href="#" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Terms of Service</Link>
+                            <Link href="/privacy" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Privacy Policy</Link>
+                            <Link href="/terms" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Terms of Service</Link>
                         </div>
                         <div style={{
                             display: 'flex', alignItems: 'center', gap: 7,
