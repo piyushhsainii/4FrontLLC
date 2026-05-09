@@ -17,6 +17,7 @@ function scrollTo(id: string) {
 
 const navLinks = [
   { label: 'Services', id: 'services' },
+  { label: 'Services', id: 'services' },
   { label: 'Projects', id: 'projects' },
   { label: 'Process', id: 'process' },
   { label: 'Contact', id: 'contact' },
@@ -52,11 +53,16 @@ export function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-8 md:flex">
+          <Link href={'/team'}
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
+            Our Team
+          </Link>
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => handleNav(id)}
-              className="text-sm font-medium hover:text-primary transition-colors"
+              className="text-sm font-medium hover:cursor-pointer hover:text-primary transition-colors"
             >
               {label}
             </button>

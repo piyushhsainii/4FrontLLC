@@ -27,7 +27,7 @@ export async function submitInspectionRequest(
   try {
     const { error } = await resend.emails.send({
       from: "FourFront LLC <info@fourfrontllc.com>",
-      to: ["info@fourfrontllc.com"],
+      to: ["fourfrontconstruction52@gmail.com"],
       subject: `New Roof Inspection Request from ${name}`,
       html: `
         <!DOCTYPE html>
