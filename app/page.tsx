@@ -8,6 +8,7 @@ import { Process } from '@/components/process';
 import { CallToAction } from '@/components/cta-section';
 import { MapFooter } from '@/components/map-footer';
 import ProjectShowcase from '@/components/project-showcase';
+import Team from '@/components/team';
 
 export default function Home() {
   return (
@@ -16,10 +17,11 @@ export default function Home() {
       <main>
         <Hero />
         <section id="services"><Services /></section>
+        <section id="our-team"><Team /></section>
         <WhyChoose />
         <section id="projects"><ProjectShowcase /></section>
         <section id="process"><Process /></section>
-        <Testimonials />
+        <section id="testimonials"><Testimonials /></section>
         <section id="contact"><CallToAction /></section>
       </main>
       <MapFooter />

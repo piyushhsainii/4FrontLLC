@@ -70,7 +70,7 @@ function ProcessCard({
   // Last card: never dims. Others: fade gently to 0.72 (subtle, not harsh).
   const opacity = useTransform(
     smoothProgress,
-    [0, 0.25, 0.75, 1],
+    [0, 0.25, 1.25, 1],
     isLast ? [0, 1, 1, 1] : [0, 1, 1, 0.72]
   );
   const scale = useTransform(

@@ -370,7 +370,7 @@ export default function ProjectShowcase() {
                     <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
                         <div>
                             <h2
-                                className="text-[clamp(26px,4vw,40px)] font-bold leading-tight tracking-tight"
+                                className="text-[clamp(26px,4vw,40px)] font-bold leading-tight tracking-tight text-center lg:text-start"
                                 style={{ color: "var(--text)" }}
                             >
                                 Full home restoration —
@@ -378,7 +378,7 @@ export default function ProjectShowcase() {
                                 <span style={{ color: "var(--navy-mid)" }}>roof to interior</span>
                             </h2>
                             <p
-                                className="mt-3 text-[14px] leading-relaxed max-w-lg"
+                                className="mt-3  text-center lg:text-start text-[14px] leading-relaxed max-w-lg"
                                 style={{ color: "var(--muted)" }}
                             >
                                 Two weeks of non-stop work by Chris, Tommy, and Evan. Roofing, drywall, paint —

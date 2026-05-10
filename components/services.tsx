@@ -47,12 +47,12 @@ export function Services() {
       <div className="mx-auto max-w-7xl">
 
         {/* Header */}
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-8">
-          <h2 className="font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground">
-            Fast roofing.<br />
-            <span className="text-primary">Done right.</span>
+        <div className="mb-12 flex flex-col lg:flex-wrap lg:items-start text-start justify-center lg:justify-between  gap-8">
+          <h2 className="font-display text-center lg:text-start text-4xl font-extrabold  ">
+            Fast roofing.
+            <span className="text-primary"> Done right.</span>
           </h2>
-          <p className="max-w-[200px] text-right text-sm leading-relaxed text-muted-foreground">
+          <p className="text-pretty mx-auto lg:mx-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
             Five specialist services — from emergency repairs to full new installs.
           </p>
         </div>

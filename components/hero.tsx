@@ -4,7 +4,7 @@ import { BackgroundPattern } from './InteractiveePattern';
 export function Hero() {
   return (
     <section className="relative z-10 flex h-[100vh] max-h-[800px] flex-col justify-center px-6 pt-24 text-center mt-20 lg:mt-0">
-      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
+      <div className="absolute hidden  inset-0 z-0 pointer-events-none lg:flex items-center justify-center">
         <BackgroundPattern />
       </div>
       <div className="mx-auto max-w-4xl z-10">

@@ -311,13 +311,6 @@ export function MapFooter() {
                         </div>
 
                         {/* Legal */}
-                        <div>
-                            <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Legal</h4>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
-                                <li><Link href="/privacy" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Privacy Policy</Link></li>
-                                <li><Link href="/terms" className="footer-link" style={{ fontSize: 13, color: T.muted, textDecoration: 'none' }}>Terms of Service</Link></li>
-                            </ul>
-                        </div>
                     </div>
 
                     {/* Copyright bar */}
@@ -329,10 +322,6 @@ export function MapFooter() {
                         <p style={{ fontSize: 12, color: T.mutedLight, margin: 0 }}>
                             &copy; {currentYear} 4Front Construction and Logistics Services. All rights reserved.
                         </p>
-                        <div style={{ display: 'flex', gap: 16 }}>
-                            <Link href="/privacy" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Privacy Policy</Link>
-                            <Link href="/terms" className="footer-link" style={{ fontSize: 12, color: T.mutedLight, textDecoration: 'none' }}>Terms of Service</Link>
-                        </div>
                         <div style={{
                             display: 'flex', alignItems: 'center', gap: 7,
                             background: T.greenLight, border: `1px solid ${T.greenBorder}`,
