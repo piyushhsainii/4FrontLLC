@@ -98,22 +98,14 @@ function ProcessCard({
         y,
         // Each card sticks progressively lower to create stacking depth
         top: `${5 + idx * 1.4}rem`,
-        // Progressive box shadow driven by scroll
-        boxShadow: `0 ${8 + idx * 6}px ${32 + idx * 14}px rgba(26,58,140,${0.05 + idx * 0.025}),
-                    0 2px 6px rgba(0,0,0,0.04),
-                    0 0 0 1px rgba(26,58,140,${0.04 + idx * 0.015})`,
+
       }}
       className="sticky rounded-3xl bg-white"
     >
       {/* Inset top border — colour accent per card */}
       <div
         className="absolute inset-x-0 top-0 h-[3px] rounded-t-3xl"
-        style={{
-          background: isEven
-            ? 'linear-gradient(90deg,#1A3A8C 0%,#4DB84E 100%)'
-            : 'linear-gradient(90deg,#4DB84E 0%,#1A3A8C 100%)',
-          opacity: 0.9,
-        }}
+
       />
 
       <div
@@ -250,7 +242,7 @@ export function Process() {
 
         {/* Header */}
         <motion.div
-          className="mb-16 md:mb-24 text-center"
+          className="mb-12 md:mb-24 text-center"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -263,7 +255,7 @@ export function Process() {
             Our Process
           </span>
           <h2
-            className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl"
+            className="text-4xl font-normal leading-tight md:text-5xl lg:text-6xl"
             style={{ color: '#0F1C3F', letterSpacing: '-1.5px' }}
           >
             Simple, clear, and{' '}

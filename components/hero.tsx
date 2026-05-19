@@ -16,11 +16,11 @@ export function Hero() {
           <span className="rounded-full bg-primary/10 px-3 py-1">Roofing Specialists</span>
         </div>
 
-        <h1 className="mb-8 text-balance text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-[4.4rem]">
+        <h1 className="mb-8 text-balance text-4xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-[4.4rem]">
           Reliable roofing, built to protect what matters most.
         </h1>
 
-        <p className="mx-auto w-full mb-10 max-w-[800px] text-balance text-base text-muted-foreground md:text-lg lg:text-xl">
+        <p className="mx-auto w-full mb-10 max-w-[800px] text-balance text-base md:text-lg lg:text-xl">
           4Front Construction and Logistics Services helps homeowners handle
           repairs, replacements, storm damage, and insurance-related roofing
           work with speed, clarity, and craftsmanship.
