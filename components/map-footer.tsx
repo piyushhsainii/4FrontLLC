@@ -260,6 +260,7 @@ export function MapFooter() {
                 <div className="mx-auto" style={{ maxWidth: 1280, padding: '44px 52px 36px' }}>
 
                     {/* 4-col links */}
+                    {/* 4-col links */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 36, marginBottom: 36 }}>
 
                         {/* Services */}
@@ -310,7 +311,15 @@ export function MapFooter() {
                             </ul>
                         </div>
 
-                        {/* Legal */}
+                        {/* BBB Badge — 4th column, right of Contact */}
+                        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                            <img
+                                src="/bbb.png"
+                                alt="BBB Accredited Business"
+                                style={{ maxWidth: 160, height: 'auto', display: 'block' }}
+                            />
+                        </div>
+
                     </div>
 
                     {/* Copyright bar */}
