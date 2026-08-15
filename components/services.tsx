@@ -4,31 +4,31 @@ const services = [
   {
     title: 'Roof Repair',
     description: 'Stop leaks quickly and prevent further damage before costs escalate.',
-    imagePlaceholder: '/roof_repair.jpeg',
+    imagePlaceholder: '/service1.jpg',
     label: '01 — Repairs',
   },
   {
     title: 'Roof Replacement',
     description: 'Full replacements built for durability and long-term performance.',
-    imagePlaceholder: '/roof_replacement.jpeg',
+    imagePlaceholder: '/service2.jpg',
     label: '02 — Replacement',
   },
   {
     title: 'New Installation',
     description: 'Professional installs for new builds and renovations.',
-    imagePlaceholder: '/roof_installation.jpeg',
+    imagePlaceholder: '/service3.jpg',
     label: '03 — Installation',
   },
   {
     title: 'Storm Response',
     description: 'Fast response for hail, wind, and emergency roofing issues.',
-    imagePlaceholder: '/roof_strom.jpeg',
+    imagePlaceholder: '/service4.jpg',
     label: '04 — Emergency',
   },
   {
     title: 'Insurance Help',
     description: 'We simplify and guide the insurance claim process.',
-    imagePlaceholder: '/roof_insurance.jpeg',
+    imagePlaceholder: '/service5.jpg',
     label: '05 — Claims',
   },
 ];
@@ -43,16 +43,16 @@ const gridClasses = [
 
 export function Services() {
   return (
-    <section id="services" className="bg-background px-6 py-20 md:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section id="services" className="bg-background px-6 py-20 md:px-10 m-0">
+      <div className="mx-auto m-0 max-w-7xl">
 
         {/* Header */}
-        <div className="mb-12 flex flex-col lg:flex-wrap lg:items-start text-start justify-center lg:justify-between  gap-8">
-          <h2 className="font-display text-center lg:text-start text-4xl font-extrabold  ">
+        <div className="mb-12 flex flex-col lg:flex-wrap lg:items-start text-start justify-center lg:justify-between  gap-4">
+          <div className="font-display text-center lg:text-start text-4xl font-normal  ">
             Fast roofing.
             <span className="text-primary"> Done right.</span>
-          </h2>
-          <p className="text-pretty mx-auto lg:mx-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
+          </div>
+          <p className="text-pretty tracking-tighter font-semibold mx-auto lg:m-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
             Five specialist services — from emergency repairs to full new installs.
           </p>
         </div>
@@ -69,7 +69,7 @@ export function Services() {
                 <img
                   src={service.imagePlaceholder}
                   alt={service.title}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 tracking-tight"
                 />
               </div>
 
@@ -89,7 +89,7 @@ export function Services() {
               {/* Text */}
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <p className="mb-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-white/55">{service.label}</p>
-                <h3 className="font-display text-lg font-bold leading-tight text-white drop-shadow-sm">{service.title}</h3>
+                <h3 className="font-display text-lg font-light  tracking-tight leading-tight text-white drop-shadow-sm">{service.title}</h3>
                 <p className="mt-0 max-h-0 overflow-hidden text-xs leading-relaxed text-white/70 opacity-0 transition-all duration-300 group-hover:mt-1.5 group-hover:max-h-14 group-hover:opacity-100">
                   {service.description}
                 </p>

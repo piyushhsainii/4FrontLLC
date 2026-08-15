@@ -7,13 +7,14 @@ import Testimonials from '@/components/testimonials';
 import { Process } from '@/components/process';
 import { CallToAction } from '@/components/cta-section';
 import { MapFooter } from '@/components/map-footer';
-import ProjectShowcase from '@/components/project-showcase';
+import ProjectShowcase from '@/components/projects-showcase-demo';
 import Team from '@/components/team';
+import InfiniteCurvedCarousel from '@/components/infinite-carousel';
+import { assetUrl, NEWLY_FINISHED_FILES } from './projects/project-manifest';
 
 export default function Home() {
   return (
     <div className="relative min-h-screen">
-      <Header />
       <main>
         <Hero />
         <section id="services"><Services /></section>
