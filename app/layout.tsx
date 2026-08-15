@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const siteUrl = 'https://fourfrontllc.com';
-const siteName = '4Front LLC';
-const title = '4Front LLC — Roofing Services Built to Last';
+const siteName = 'Four Front LLC';
+const title = 'Four Front LLC — Roofing Services Built to Last';
 const description = 'Reliable roofing for repairs, replacements, new installs, and storm response. Serving homeowners with speed, quality, and long-term protection.';
 const imageUrl = `${siteUrl}/4frontmetadata.png`;
 
@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     'storm damage roofing',
     'insurance claim roofing',
     '4Front LLC',
+    'Four Front LLC'
   ],
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
