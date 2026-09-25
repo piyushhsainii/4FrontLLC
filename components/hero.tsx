@@ -18,7 +18,7 @@ export function Hero() {
           <span className="rounded-full bg-primary/10 px-3 py-1">Roofing Specialists</span>
         </div>
 
-        <h1 className="mb-8 text-balance text-4xl font-semibold  tracking-tighter text-foreground md:text-6xl lg:text-[4.4rem]">
+        <h1 className="mb-8 text-balance text-4xl font-medium tracking-tight text-foreground md:text-6xl lg:text-[4.4rem]">
           Reliable roofing, built to protect what matters most.
         </h1>
 
@@ -31,13 +31,13 @@ export function Hero() {
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
           <a
             href="#contact"
-            className="w-full rounded-full bg-primary border-2 border-primary px-8 py-4 text-base font-normal tracking-tighter text-primary-foreground transition-all shadow-[6px_6px_0px_var(--green)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_var(--green)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:w-auto"
+            className="w-full rounded-full bg-primary border-2 border-primary px-8 py-4 text-base font-medium tracking-normal text-primary-foreground transition-all duration-300 ease-out shadow-sm hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:shadow-sm sm:w-auto"
           >
             Get a free roof Inspection
           </a>
           <a
             href="#projects"
-            className="w-full rounded-full border-2 border-accent bg-transparent px-8 py-4 text-base font-normal tracking-tighter text-accent transition-colors hover:bg-accent/10 hover:shadow-lg sm:w-auto"
+            className="w-full rounded-full border-2 border-accent bg-transparent px-8 py-4 text-base font-medium tracking-normal text-accent transition-all duration-300 ease-out hover:bg-accent/10 hover:shadow-sm sm:w-auto"
           >
             View Recent Projects
           </a>

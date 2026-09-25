@@ -31,7 +31,7 @@ export function InsuranceStepper() {
     <section className="relative z-10 bg-card py-24 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
         <div className="mb-16 md:mb-24 text-center">
-          <h2 className="mb-6 text-balance text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">
+          <h2 className="mb-6 text-balance text-4xl font-medium leading-tight tracking-tight text-foreground md:text-5xl">
             Insurance Claim Help
           </h2>
           <p className="text-lg text-muted-foreground md:text-xl">

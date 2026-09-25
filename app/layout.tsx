@@ -148,7 +148,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
-      <body className="font-sans font-light tracking-tighter antialiased" suppressHydrationWarning>
+      <body className="font-sans font-normal tracking-normal antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

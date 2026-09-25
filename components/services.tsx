@@ -4,31 +4,31 @@ const services = [
   {
     title: 'Roof Repair',
     description: 'Stop leaks quickly and prevent further damage before costs escalate.',
-    imagePlaceholder: '/service1.jpg',
+    imagePlaceholder: '/27.jpg',
     label: '01 — Repairs',
   },
   {
     title: 'Roof Replacement',
     description: 'Full replacements built for durability and long-term performance.',
-    imagePlaceholder: '/service2.jpg',
+    imagePlaceholder: '/141.jpg',
     label: '02 — Replacement',
   },
   {
     title: 'New Installation',
     description: 'Professional installs for new builds and renovations.',
-    imagePlaceholder: '/service3.jpg',
+    imagePlaceholder: '/Project1/2.jpg',
     label: '03 — Installation',
   },
   {
     title: 'Storm Response',
     description: 'Fast response for hail, wind, and emergency roofing issues.',
-    imagePlaceholder: '/service4.jpg',
+    imagePlaceholder: '/9.webp',
     label: '04 — Emergency',
   },
   {
     title: 'Insurance Help',
     description: 'We simplify and guide the insurance claim process.',
-    imagePlaceholder: '/service5.jpg',
+    imagePlaceholder: '/139.jpg',
     label: '05 — Claims',
   },
 ];
@@ -48,11 +48,11 @@ export function Services() {
 
         {/* Header */}
         <div className="mb-12 flex flex-col lg:flex-wrap lg:items-start text-start justify-center lg:justify-between  gap-4">
-          <div className="font-display text-center lg:text-start text-4xl font-normal  ">
+          <div className="font-display text-center lg:text-start text-4xl font-medium tracking-tight">
             Fast roofing.
             <span className="text-primary"> Done right.</span>
           </div>
-          <p className="text-pretty tracking-tighter font-semibold mx-auto lg:m-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
+          <p className="text-pretty tracking-normal font-normal mx-auto lg:m-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
             Five specialist services — from emergency repairs to full new installs.
           </p>
         </div>
@@ -62,14 +62,14 @@ export function Services() {
           {services.map((service, idx) => (
             <div
               key={idx}
-              className={`group relative overflow-hidden rounded-2xl border border-border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-md min-h-[240px] ${gridClasses[idx]}`}
+              className={`group relative overflow-hidden rounded-2xl border border-border cursor-pointer transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-md min-h-[240px] ${gridClasses[idx]}`}
             >
               {/* Image fills the card */}
               <div className="absolute inset-0">
                 <img
                   src={service.imagePlaceholder}
                   alt={service.title}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 tracking-tight"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
 
@@ -89,7 +89,7 @@ export function Services() {
               {/* Text */}
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <p className="mb-1 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-white/55">{service.label}</p>
-                <h3 className="font-display text-lg font-light  tracking-tight leading-tight text-white drop-shadow-sm">{service.title}</h3>
+                <h3 className="font-display text-lg font-medium tracking-tight leading-tight text-white drop-shadow-sm">{service.title}</h3>
                 <p className="mt-0 max-h-0 overflow-hidden text-xs leading-relaxed text-white/70 opacity-0 transition-all duration-300 group-hover:mt-1.5 group-hover:max-h-14 group-hover:opacity-100">
                   {service.description}
                 </p>

@@ -26,7 +26,7 @@ export function WhyChoose() {
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <span className="mb-4 block text-sm font-bold tracking-widest text-accent uppercase">Why 4Front</span>
-            <h2 className="mb-6 text-balance text-4xl font-bold leading-tight tracking-tight text-primary-foreground md:text-5xl lg:text-6xl">
+            <h2 className="mb-6 text-balance text-4xl font-medium leading-tight tracking-tight text-primary-foreground md:text-5xl lg:text-6xl">
               The professional, low-risk contractor choice.
             </h2>
             <p className="text-lg text-primary-foreground/80 md:text-xl">
@@ -40,7 +40,7 @@ export function WhyChoose() {
                 <div className="mb-4 text-sm font-bold text-accent">
                   {String(idx + 1).padStart(2, '0')}
                 </div>
-                <h3 className="mb-3 text-xl font-bold text-primary-foreground">{reason.title}</h3>
+                <h3 className="mb-3 text-xl font-semibold tracking-tight text-primary-foreground">{reason.title}</h3>
                 <p className="text-primary-foreground/70 text-sm leading-relaxed">{reason.description}</p>
               </div>
             ))}

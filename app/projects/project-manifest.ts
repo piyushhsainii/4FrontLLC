@@ -61,7 +61,7 @@ export const NEWLY_FINISHED_FILES: string[] = [
   "47.jpg",
   "48.jpg",
   "49.jpg",
-  "50.jpg",
+  "50.jpg"
 ];
 
 export const COMPLETED_PROJECTS_FILES: string[] = [
@@ -224,13 +224,30 @@ export const COMPLETED_PROJECTS_FILES: string[] = [
   "158.jpg",
   "bbb.png",
   "center_full_house.jpg",
+  "chimney_.jpg",
+  "chris-avatar.png",
   "in_progress_2.jpg",
   "in_progress_shot.jpg",
+  "jake-avatar.png",
+  "LLC_LOGO.png",
+  "p1.jpeg",
+  "p2.jpeg",
+  "p3.jpeg",
+  "p4.jpeg",
+  "p5.jpeg",
+  "roof_completed_1.jpg",
+  "roof_completed_2.jpg",
+  "roof_completed_3.jpg",
+  "roof_installation.jpeg",
+  "roof_insurance.jpeg",
+  "roof_repair.jpeg",
+  "roof_replacement.jpeg",
+  "roof_strom.jpeg",
   "service1.jpg",
   "service2.jpg",
   "service3.jpg",
   "service4.jpg",
-  "service5.jpg",
+  "service5.jpg"
 ];
 
 export const POPULAR_FILES: string[] = [
@@ -311,10 +328,16 @@ export const POPULAR_FILES: string[] = [
   "75.webp",
   "76.webp",
   "77.webp",
-  "78.webp",
+  "78.webp"
 ];
 
-export const VIDEOS_FILES: string[] = ["1.mp4", "2.mp4", "3.mp4", "4.mp4"];
+export const VIDEOS_FILES: string[] = [
+  "1.mp4",
+  "2.mp4",
+  "3.mp4",
+  "4.mp4",
+  "Fourfront Video.mp4"
+];
 
 export const CATEGORIES: CategoryConfig[] = [
   {

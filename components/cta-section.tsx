@@ -83,7 +83,7 @@ export function CallToAction() {
       <div className="mx-auto max-w-7xl px-6 relative z-10 grid gap-16 lg:grid-cols-2 lg:gap-24 items-center">
         {/* Left copy */}
         <div>
-          <h2 className="mb-6 text-balance text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
+          <h2 className="mb-6 text-balance text-4xl font-medium leading-tight tracking-tight md:text-5xl lg:text-6xl">
             Get Your Free Roof Inspection Today
           </h2>
           <p className="mb-10 text-lg text-primary-foreground/80 md:text-xl max-w-lg">
