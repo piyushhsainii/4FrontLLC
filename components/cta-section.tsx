@@ -84,7 +84,7 @@ export function CallToAction() {
         {/* Left copy */}
         <div>
           <h2 className="mb-6 text-balance text-4xl font-medium leading-tight tracking-tight md:text-5xl lg:text-6xl">
-            Get Your Free Roof Inspection Today
+            Get Your Free Exterior Inspection Today
           </h2>
           <p className="mb-10 text-lg text-primary-foreground/80 md:text-xl max-w-lg">
             Don&apos;t wait until small issues become expensive problems. Secure

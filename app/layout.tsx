@@ -12,8 +12,8 @@ const inter = Inter({
 
 const siteUrl = 'https://fourfrontllc.com';
 const siteName = 'Four Front LLC';
-const title = 'Four Front LLC — Roofing Services Built to Last';
-const description = 'Reliable roofing for repairs, replacements, new installs, and storm response. Serving homeowners with speed, quality, and long-term protection.';
+const title = 'Four Front LLC — Siding & Exterior Services';
+const description = 'Siding installation and replacement, gutters, windows, doors, roofing, and storm repairs. Thoughtful exterior work built to protect your home.';
 const imageUrl = `${siteUrl}/4frontmetadata.png`;
 
 export const metadata: Metadata = {
@@ -25,6 +25,12 @@ export const metadata: Metadata = {
   },
   description,
   keywords: [
+    'siding contractor',
+    'siding installation',
+    'siding replacement',
+    'gutter installation',
+    'window installation',
+    'door installation',
     'roofing contractor',
     'roof repair',
     'roof replacement',
@@ -55,7 +61,7 @@ export const metadata: Metadata = {
         url: imageUrl,
         width: 1200,
         height: 630,
-        alt: `${siteName} — Roofing Services`,
+        alt: `${siteName} — Siding and Exterior Services`,
       },
     ],
     locale: 'en_US',
@@ -96,12 +102,12 @@ export const metadata: Metadata = {
   // },
 };
 
-// Structured data (JSON-LD) so Google understands this as a local roofing
+// Structured data (JSON-LD) so Google understands this as a local exterior
 // business, what it offers, and its review rating. Update the placeholder
 // fields marked TODO with your real values.
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'RoofingContractor',
+  '@type': 'GeneralContractor',
   '@id': `${siteUrl}/#organization`,
   name: siteName,
   image: imageUrl,
@@ -131,6 +137,10 @@ const jsonLd = {
     reviewCount: '40',
   },
   makesOffer: [
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Siding Installation and Replacement' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Gutter Installation and Replacement' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Window Installation' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Door Installation' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Roof Repair' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Roof Replacement' } },
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'New Roof Installation' } },

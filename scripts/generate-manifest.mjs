@@ -64,6 +64,13 @@ function isExcludedDir(name) {
 // match: file extensions to include
 const CATEGORY_DEFS = [
   {
+    id: "recentSeptember2026",
+    label: "Recent Project · September 2026",
+    kind: "image",
+    dir: "recent-september-2026",
+    match: [".jpg", ".jpeg", ".png", ".webp"],
+  },
+  {
     id: "newlyFinished",
     label: "Newly Finished",
     kind: "image",
@@ -155,6 +162,15 @@ function scanFolder(dir, extensions) {
 
 const results = CATEGORY_DEFS.map((cat) => {
   const files = scanFolder(cat.dir, cat.match);
+  if (cat.id === "recentSeptember2026") {
+    files.sort((a, b) => {
+      if (a === "23.jpg") return -1;
+      if (b === "23.jpg") return 1;
+      const aSiding = Number.parseInt(a, 10) >= 20;
+      const bSiding = Number.parseInt(b, 10) >= 20;
+      return Number(bSiding) - Number(aSiding) || naturalSort(a, b);
+    });
+  }
   console.log(`✓ ${cat.id}: ${files.length} files found in /public/${cat.dir || ""}`);
   return { ...cat, files };
 });

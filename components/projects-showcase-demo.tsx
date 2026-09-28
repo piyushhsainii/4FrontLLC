@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, useMemo, CSSProperties } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, useSyncExternalStore, CSSProperties } from 'react';
 import { CATEGORIES, CategoryConfig, assetUrl } from './../app/projects/project-manifest';
 import InfiniteCurvedCarousel from './infinite-carousel';
 
@@ -33,28 +33,23 @@ const AUTOPLAY_MS = 5000;
 const PRELOAD_WINDOW = 1;
 const ROW_HEIGHT = 560;
 
+function useMediaQuery(query: string, serverValue: boolean): boolean {
+    const subscribe = useCallback((onChange: () => void) => {
+        const media = window.matchMedia(query);
+        media.addEventListener('change', onChange);
+        return () => media.removeEventListener('change', onChange);
+    }, [query]);
+    const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query]);
+    const getServerSnapshot = useCallback(() => serverValue, [serverValue]);
+    return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
 function useReducedMotion(): boolean {
-    const [reduced, setReduced] = useState(false);
-    useEffect(() => {
-        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-        setReduced(mq.matches);
-        const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
-        mq.addEventListener('change', handler);
-        return () => mq.removeEventListener('change', handler);
-    }, []);
-    return reduced;
+    return useMediaQuery('(prefers-reduced-motion: reduce)', false);
 }
 
 function useHoverCapable(): boolean {
-    const [hoverCapable, setHoverCapable] = useState(true);
-    useEffect(() => {
-        const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
-        setHoverCapable(mq.matches);
-        const handler = (e: MediaQueryListEvent) => setHoverCapable(e.matches);
-        mq.addEventListener('change', handler);
-        return () => mq.removeEventListener('change', handler);
-    }, []);
-    return hoverCapable;
+    return useMediaQuery('(hover: hover) and (pointer: fine)', true);
 }
 
 interface VideoSlideProps {
@@ -183,7 +178,6 @@ function Cell({ category, size, onRatio }: CellProps) {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [playing, inView, reducedMotion, total, isVideo, index]);
 
     const visibleSlides = useMemo(() => {
@@ -383,31 +377,22 @@ function Cell({ category, size, onRatio }: CellProps) {
      combined — a genuinely random mix, not one category per row.
    ============================================================================ */
 export default function ProjectShowcase() {
-    const featured = CATEGORIES.find((c) => c.kind === 'video') ?? CATEGORIES[0];
+    const featured = CATEGORIES.find((c) => c.id === 'recentSeptember2026') ?? CATEGORIES[0];
+    const walkthroughs = CATEGORIES.find((c) => c.kind === 'video') ?? featured;
 
-    const [mixA, mixB] = useMemo(() => {
-        const imageCategories = CATEGORIES.filter((c) => c.kind === 'image');
+    const mixA = useMemo(() => {
+        const imageCategories = CATEGORIES.filter((c) => c.kind === 'image' && c.id !== featured.id);
         const pool = imageCategories.flatMap((cat) =>
             cat.files.map((file) => assetUrl(cat, file))
         );
-        const shuffled = [...pool];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        const half = Math.ceil(shuffled.length / 2);
-        const toVirtualCategory = (id: string, files: string[]): CategoryConfig => ({
-            id,
+        return {
+            id: 'projectHighlights',
             label: 'Featured Projects',
             kind: 'image',
             basePath: '',
-            files,
-        });
-        return [
-            toVirtualCategory('mixA', shuffled.slice(0, half)),
-            toVirtualCategory('mixB', shuffled.slice(half)),
-        ];
-    }, []);
+            files: pool,
+        } satisfies CategoryConfig;
+    }, [featured.id]);
 
     return (
         <section className="showcase-root bg-slate-100 mt-10" style={TOKENS}>
@@ -426,6 +411,7 @@ export default function ProjectShowcase() {
           height: ${ROW_HEIGHT}px;
         }
         .showcase-cell-lg-wrap {
+          position: relative;
           flex: 1 1 50%;
           min-width: 0;
           height: 100%;
@@ -450,6 +436,25 @@ export default function ProjectShowcase() {
           overflow: hidden;
           background: var(--navy-950);
           box-shadow: 0 16px 32px -20px rgba(11, 31, 58, 0.35);
+          transition: transform 450ms cubic-bezier(.22,1,.36,1), box-shadow 450ms cubic-bezier(.22,1,.36,1);
+        }
+        .showcase-cell:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 20px 42px -22px rgba(11, 31, 58, 0.38);
+        }
+        .showcase-recent-label {
+          position: absolute;
+          bottom: 16px;
+          left: 16px;
+          z-index: 5;
+          padding: 8px 12px;
+          border-radius: 999px;
+          background: rgba(255,255,255,.92);
+          color: var(--navy-950);
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: .03em;
+          box-shadow: 0 4px 18px rgba(11,31,58,.12);
         }
         .showcase-empty {
           display: flex;
@@ -469,8 +474,8 @@ export default function ProjectShowcase() {
           position: absolute;
           inset: 0;
           opacity: 0;
-          transform: scale(1.04);
-          transition: opacity 520ms ease, transform 620ms ease;
+          transform: scale(1.035) translateY(5px);
+          transition: opacity 650ms cubic-bezier(.22,1,.36,1), transform 800ms cubic-bezier(.22,1,.36,1);
           z-index: 1;
           pointer-events: none;
         }
@@ -606,11 +611,15 @@ export default function ProjectShowcase() {
         @media (max-width: 640px) {
           .showcase-title { font-size: 24px; }
         }
+        @media (prefers-reduced-motion: reduce) {
+          .showcase-cell, .showcase-media-wrap { transition-duration: 0.01ms; }
+          .showcase-cell:hover { transform: none; }
+        }
       `}</style>
             <div className=" mt-10 bg-slate-100">
                 <div className='flex flex-col gap-4 justify-center items-center mx-auto'>
                     <p className="font-medium text-4xl  text-center mx-auto tracking-tight font-sans">Projects</p>
-                    <p className="font-normal text-2xl text-center mx-auto tracking-tighter">Explore our extensive archive of completed projects. <br></br> Precision craftsmanship, structural integrity, and architectural excellence.</p>
+                    <p className="font-normal text-2xl text-center mx-auto tracking-tight">Recent siding and exterior projects, with roofing, gutters, windows, and doors handled with care.</p>
                 </div>
             </div>
             <InfiniteCurvedCarousel
@@ -624,10 +633,11 @@ export default function ProjectShowcase() {
             <div className="showcase-grid">
                 <div className="showcase-cell-lg-wrap">
                     <Cell category={featured} size="lg" />
+                    <span className="showcase-recent-label">Recent Project · September 2026</span>
                 </div>
                 <div className="showcase-cell-rest">
+                    <Cell category={walkthroughs} size="sm" />
                     <Cell category={mixA} size="sm" />
-                    <Cell category={mixB} size="sm" />
                 </div>
             </div>
 

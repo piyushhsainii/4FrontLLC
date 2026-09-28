@@ -15,17 +15,17 @@ export function Hero() {
           <span className="hidden h-1 w-1 rounded-full bg-primary md:block" />
           <span className="rounded-full bg-primary/10 px-3 py-1">Fully Insured</span>
           <span className="hidden h-1 w-1 rounded-full bg-primary md:block" />
-          <span className="rounded-full bg-primary/10 px-3 py-1">Roofing Specialists</span>
+          <span className="rounded-full bg-primary/10 px-3 py-1">Exterior Specialists</span>
         </div>
 
         <h1 className="mb-8 text-balance text-4xl font-medium tracking-tight text-foreground md:text-6xl lg:text-[4.4rem]">
-          Reliable roofing, built to protect what matters most.
+          Siding and exterior work, built to protect what matters most.
         </h1>
 
         <p className="mx-auto w-full mb-10 max-w-[800px] text-balance text-base md:text-lg lg:text-xl">
-          4Front Construction and Logistics Services helps homeowners handle
-          repairs, replacements, storm damage, and insurance-related roofing
-          work with speed, clarity, and craftsmanship.
+          4Front Construction and Logistics Services helps homeowners with siding,
+          gutters, windows, doors, and roofing — from planned upgrades to storm repairs —
+          with clarity and craftsmanship.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
@@ -33,7 +33,7 @@ export function Hero() {
             href="#contact"
             className="w-full rounded-full bg-primary border-2 border-primary px-8 py-4 text-base font-medium tracking-normal text-primary-foreground transition-all duration-300 ease-out shadow-sm hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:shadow-sm sm:w-auto"
           >
-            Get a free roof Inspection
+            Get a free exterior inspection
           </a>
           <a
             href="#projects"

@@ -16,7 +16,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="max-w-md text-muted-foreground">
-              Reliable roofing, built to protect what matters most. Professional, fully insured, and highly rated.
+              Siding and exterior work built to protect what matters most. Professional, fully insured, and highly rated.
             </p>
           </div>
 
@@ -38,11 +38,11 @@ export function Footer() {
           <div>
             <h4 className="mb-6 font-bold tracking-tight">Services</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#services" className="hover:text-primary transition-colors">Roof Repair</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Roof Replacement</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">New Installation</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Storm Response</Link></li>
-              <li><Link href="#services" className="hover:text-primary transition-colors">Insurance Help</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Siding</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Gutters</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Windows &amp; Doors</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Roofing</Link></li>
+              <li><Link href="#services" className="hover:text-primary transition-colors">Storm &amp; Insurance</Link></li>
             </ul>
           </div>
         </div>

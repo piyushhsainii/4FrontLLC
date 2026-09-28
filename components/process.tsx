@@ -13,32 +13,32 @@ const processSteps = [
   {
     title: 'Free Inspection',
     description:
-      'We come out to correctly assess the damage and provide a detailed report on our findings.',
-    image: '/139.jpg',
+      'We inspect your siding and exterior, identify areas of concern, and explain what we find.',
+    image: '/recent-september-2026/24.jpg',
   },
   {
     title: 'Clear Estimate',
     description:
       'You receive a complete, itemized estimate outlining scopes, timelines, and costs.',
-    image: '/27.jpg',
+    image: '/recent-september-2026/26.jpg',
   },
   {
     title: 'Fast Scheduling',
     description:
       'Once approved, we coordinate materials and crew availability to get the job done fast.',
-    image: '/143.jpg',
+    image: '/recent-september-2026/25.jpg',
   },
   {
     title: 'Professional Build',
     description:
-      'Our certified crews work efficiently to replace or repair your roof, leaving an immaculate site.',
-    image: '/141.jpg',
+      'Our crews carry out the siding, gutter, window, door, or roofing work with attention to detail and a clean site.',
+    image: '/recent-september-2026/27.jpg',
   },
   {
     title: 'Final Walkthrough',
     description:
       'We do a complete inspection with you to ensure satisfaction before we call it complete.',
-    image: '/Project2/1.jpg',
+    image: '/recent-september-2026/23.jpg',
   },
 ];
 

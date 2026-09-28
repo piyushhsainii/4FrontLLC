@@ -29,6 +29,7 @@ type MediaItem = {
     id: string;
     src: string;
     type: 'image' | 'video';
+    recent: boolean;
 };
 
 // Deterministic shuffle (mulberry32 PRNG with a fixed seed) so the order
@@ -53,15 +54,20 @@ function seededShuffle<T>(arr: T[], seed = 42): T[] {
 
 // Flatten every category's files into one flat list, then shuffle so the
 // wall mixes categories together instead of rendering as grouped blocks.
-const ALL_ITEMS: MediaItem[] = seededShuffle(
-    CATEGORIES.flatMap((cat) =>
+const toItems = (categories: typeof CATEGORIES): MediaItem[] =>
+    categories.flatMap((cat) =>
         cat.files.map((f, i) => ({
             id: `${cat.id}-${i}`,
             src: assetUrl(cat, f),
             type: cat.kind,
+            recent: cat.id === 'recentSeptember2026',
         }))
-    )
-);
+    );
+
+const ALL_ITEMS: MediaItem[] = [
+    ...toItems(CATEGORIES.filter((cat) => cat.id === 'recentSeptember2026')),
+    ...seededShuffle(toItems(CATEGORIES.filter((cat) => cat.id !== 'recentSeptember2026'))),
+];
 
 // How many cards get revealed per scroll-triggered batch.
 const PAGE_SIZE = 12;
@@ -94,7 +100,7 @@ function CardMedia({ item }: { item: MediaItem }) {
                 muted
                 playsInline
                 preload="metadata"
-                className="block w-full transition-transform duration-500 ease-out group-hover:scale-105"
+                className="block w-full transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.025]"
             />
         );
     }
@@ -104,7 +110,7 @@ function CardMedia({ item }: { item: MediaItem }) {
             alt=""
             loading="lazy"
             decoding="async"
-            className="block w-full transition-transform duration-500 ease-out group-hover:scale-105"
+            className="block w-full transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.025]"
         />
     );
 }
@@ -138,7 +144,7 @@ function Reveal({ children }: { children: ReactNode }) {
     return (
         <div
             ref={ref}
-            className={`transition-[opacity,transform] duration-500 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0 will-change-transform'
+            className={`transition-[opacity,transform] duration-700 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 will-change-transform'
                 }`}
         >
             {children}
@@ -151,10 +157,11 @@ function Card({ item, onOpen }: { item: MediaItem; onOpen: () => void }) {
         <button
             type="button"
             onClick={onOpen}
-            className="group relative block w-full overflow-hidden rounded-2xl bg-muted text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            className="group relative block w-full overflow-hidden rounded-2xl bg-muted text-left shadow-sm transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
         >
             <CardMedia item={item} />
             <TypeBadge type={item.type} />
+            {item.recent && <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-primary shadow-sm backdrop-blur-sm">Recent Project</span>}
         </button>
     );
 }
@@ -243,7 +250,7 @@ function Lightbox({
     );
 }
 
-export default function page() {
+export default function ProjectsPage() {
     const [visibleCount, setVisibleCount] = useState(Math.min(PAGE_SIZE, ALL_ITEMS.length));
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -274,13 +281,12 @@ export default function page() {
     return (
         <section id="projects" className="px-6 py-24">
             <div className="mx-auto max-w-6xl mt-10">
-                <h2 className="mb-4 text-3xl font-normal tracking-tighter text-foreground ">
+                <h2 className="mb-4 text-3xl font-medium tracking-tight text-foreground ">
                     Our Projects
                 </h2>
-                <p className="mb-12 max-w-2xl text-base leading-5 text-muted-foreground md:text-lg tracking-tighter ">
-                    Explore our portfolio of structural integrity and premium craftsmanship. From
-                    robust commercial roofing to precise residential framing, every project is a
-                    testament to our commitment to excellence.
+                <p className="mb-12 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg tracking-normal">
+                    Explore recent siding and exterior work alongside roofing, gutters, windows, and doors.
+                    Every project reflects careful planning and clean execution.
                 </p>
 
                 {/* True masonry: columns own the layout, each card keeps its

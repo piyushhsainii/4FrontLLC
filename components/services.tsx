@@ -2,34 +2,34 @@ import React from 'react';
 
 const services = [
   {
-    title: 'Roof Repair',
-    description: 'Stop leaks quickly and prevent further damage before costs escalate.',
-    imagePlaceholder: '/27.jpg',
-    label: '01 — Repairs',
+    title: 'Siding',
+    description: 'Thoughtful siding installation and replacement for a durable, finished exterior.',
+    imagePlaceholder: '/recent-september-2026/23.jpg',
+    label: '01 — Siding',
   },
   {
-    title: 'Roof Replacement',
-    description: 'Full replacements built for durability and long-term performance.',
-    imagePlaceholder: '/141.jpg',
-    label: '02 — Replacement',
+    title: 'Gutters',
+    description: 'Gutter installation and replacement to guide water away from your home.',
+    imagePlaceholder: '/recent-september-2026/3.jpg',
+    label: '02 — Gutters',
   },
   {
-    title: 'New Installation',
-    description: 'Professional installs for new builds and renovations.',
-    imagePlaceholder: '/Project1/2.jpg',
-    label: '03 — Installation',
+    title: 'Windows & Doors',
+    description: 'Window and door upgrades that improve the look and function of your home.',
+    imagePlaceholder: '/recent-september-2026/1.jpg',
+    label: '03 — Openings',
   },
   {
-    title: 'Storm Response',
-    description: 'Fast response for hail, wind, and emergency roofing issues.',
+    title: 'Roofing',
+    description: 'Roof repairs and replacements built for long-term protection.',
+    imagePlaceholder: '/recent-september-2026/6.jpg',
+    label: '04 — Roofing',
+  },
+  {
+    title: 'Storm & Insurance',
+    description: 'Responsive exterior repairs and clear guidance through the claim process.',
     imagePlaceholder: '/9.webp',
-    label: '04 — Emergency',
-  },
-  {
-    title: 'Insurance Help',
-    description: 'We simplify and guide the insurance claim process.',
-    imagePlaceholder: '/139.jpg',
-    label: '05 — Claims',
+    label: '05 — Support',
   },
 ];
 
@@ -49,11 +49,11 @@ export function Services() {
         {/* Header */}
         <div className="mb-12 flex flex-col lg:flex-wrap lg:items-start text-start justify-center lg:justify-between  gap-4">
           <div className="font-display text-center lg:text-start text-4xl font-medium tracking-tight">
-            Fast roofing.
-            <span className="text-primary"> Done right.</span>
+            Siding first.
+            <span className="text-primary"> Exteriors done right.</span>
           </div>
           <p className="text-pretty tracking-normal font-normal mx-auto lg:m-0 text-center lg:text-start text-xl leading-relaxed text-muted-foreground">
-            Five specialist services — from emergency repairs to full new installs.
+            Siding, gutters, windows, doors, and roofing — all handled with care.
           </p>
         </div>
 

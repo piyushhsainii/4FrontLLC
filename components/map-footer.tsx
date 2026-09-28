@@ -102,7 +102,7 @@ export function MapFooter() {
                             />
                         </Link>
                         <p style={{ fontSize: 13.5, lineHeight: 1.72, color: T.muted, maxWidth: 280, margin: 0 }}>
-                            Reliable roofing, built to protect what matters most. Professional, fully insured, and highly rated.
+                            Siding and exterior work built to protect what matters most. Professional, fully insured, and highly rated.
                         </p>
                     </div>
 
@@ -267,7 +267,7 @@ export function MapFooter() {
                         <div>
                             <h4 style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '1.6px', textTransform: 'uppercase', color: T.navy, marginBottom: 16, marginTop: 0 }}>Services</h4>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
-                                {['Roof Repair', 'Roof Replacement', 'New Installation', 'Storm Response', 'Insurance Help'].map((s) => (
+                                {['Siding', 'Gutters', 'Windows & Doors', 'Roofing', 'Storm & Insurance'].map((s) => (
                                     <li key={s}>
                                         <button
                                             onClick={() => scrollToSection('services')}

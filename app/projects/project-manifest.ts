@@ -11,6 +11,37 @@ export interface CategoryConfig {
   files: string[];
 }
 
+export const RECENT_SEPTEMBER2026_FILES: string[] = [
+  "23.jpg",
+  "20.jpg",
+  "21.jpg",
+  "22.jpg",
+  "24.jpg",
+  "25.jpg",
+  "26.jpg",
+  "27.jpg",
+  "28.jpg",
+  "29.jpg",
+  "30.jpg",
+  "31.jpg",
+  "1.jpg",
+  "2.jpg",
+  "3.jpg",
+  "4.jpg",
+  "5.jpg",
+  "6.jpg",
+  "7.jpg",
+  "8.jpg",
+  "10.jpg",
+  "11.jpg",
+  "12.jpg",
+  "15.jpg",
+  "16.jpg",
+  "17.jpg",
+  "18.jpg",
+  "19.jpg"
+];
+
 export const NEWLY_FINISHED_FILES: string[] = [
   "1.jpg",
   "2.jpg",
@@ -340,6 +371,13 @@ export const VIDEOS_FILES: string[] = [
 ];
 
 export const CATEGORIES: CategoryConfig[] = [
+  {
+    id: "recentSeptember2026",
+    label: "Recent Project · September 2026",
+    kind: "image",
+    basePath: "/recent-september-2026/",
+    files: RECENT_SEPTEMBER2026_FILES,
+  },
   {
     id: "newlyFinished",
     label: "Newly Finished",
