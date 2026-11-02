@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 const siteUrl = 'https://fourfrontllc.com';
-const siteName = 'Four Front LLC';
-const title = 'Four Front LLC — Siding & Exterior Services';
+const siteName = 'FourFront LLC';
+const title = 'FourFront LLC — Siding & Exterior Services';
 const description = 'Siding installation and replacement, gutters, windows, doors, roofing, and storm repairs. Thoughtful exterior work built to protect your home.';
 const imageUrl = `${siteUrl}/4frontmetadata.png`;
 
@@ -37,8 +37,7 @@ export const metadata: Metadata = {
     'new roof installation',
     'storm damage roofing',
     'insurance claim roofing',
-    '4Front LLC',
-    'Four Front LLC'
+    'FourFront LLC'
   ],
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
@@ -133,8 +132,8 @@ const jsonLd = {
   },
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    reviewCount: '40',
+    ratingValue: '4.9',
+    reviewCount: '17',
   },
   makesOffer: [
     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Siding Installation and Replacement' } },

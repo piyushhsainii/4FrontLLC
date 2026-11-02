@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="flex flex-col group mb-6 inline-block">
-              <span className="text-2xl font-bold tracking-tight">4Front</span>
+              <span className="text-2xl font-bold tracking-tight">FourFront</span>
               <span className="text-xs font-semibold tracking-wider uppercase text-muted-foreground group-hover:text-primary transition-colors">
                 Construction & Logistics Services
               </span>
@@ -48,7 +48,7 @@ export function Footer() {
         </div>
 
         <div className="mt-16 border-t border-border pt-8 text-sm text-muted-foreground flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>&copy; {currentYear} 4Front Construction and Logistics Services. All rights reserved.</p>
+          <p>&copy; {currentYear} FourFront Construction and Logistics Services. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>

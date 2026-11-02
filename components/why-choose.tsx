@@ -25,7 +25,7 @@ export function WhyChoose() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
-            <span className="mb-4 block text-sm font-bold tracking-widest text-accent uppercase">Why 4Front</span>
+            <span className="mb-4 block text-sm font-bold tracking-widest text-accent uppercase">Why FourFront</span>
             <h2 className="mb-6 text-balance text-4xl font-medium leading-tight tracking-tight text-primary-foreground md:text-5xl lg:text-6xl">
               The professional, low-risk contractor choice.
             </h2>

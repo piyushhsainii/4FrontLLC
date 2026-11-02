@@ -1,651 +1,71 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, useMemo, useSyncExternalStore, CSSProperties } from 'react';
-import { CATEGORIES, CategoryConfig, assetUrl } from './../app/projects/project-manifest';
+import { useState } from 'react';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import InfiniteCurvedCarousel from './infinite-carousel';
 
-/* ============================================================================
-   DESIGN TOKENS — swap hex values here to re-theme everything below.
-   ============================================================================ */
-const TOKENS: CSSProperties = {
-    ['--navy-950' as any]: '#0B1F3A',
-    ['--navy-900' as any]: '#0F2A4D',
-    ['--slate-50' as any]: '#F5F7FA',
-    ['--slate-100' as any]: '#EDF0F5',
-    ['--slate-200' as any]: '#E1E6EE',
-    ['--slate-400' as any]: '#8A95A6',
-    ['--slate-600' as any]: '#4B5566',
-    ['--ink' as any]: '#111827',
-    ['--accent' as any]: '#2F6FED',
-    ['--white' as any]: '#FFFFFF',
-    ['--radius-lg' as any]: '16px',
-    ['--radius-md' as any]: '10px',
-    ['--space-1' as any]: '4px',
-    ['--space-2' as any]: '8px',
-    ['--space-3' as any]: '12px',
-    ['--space-4' as any]: '16px',
-    ['--space-5' as any]: '24px',
-    ['--space-6' as any]: '32px',
-    ['--space-8' as any]: '48px',
-};
+const base = '/recent-september-2026/';
+const carouselPhotos = [
+  ['23.jpg', 'Completed siding on a two-story home'],
+  ['20.jpg', 'Finished siding beside a raised deck'],
+  ['21.jpg', 'Porch and exterior siding project'],
+  ['22.jpg', 'Residential siding and roof exterior'],
+  ['24.jpg', 'Siding installation in progress'],
+  ['25.jpg', 'Garage trim and exterior work'],
+  ['26.jpg', 'Siding installation with house wrap'],
+  ['27.jpg', 'Siding installation near the roofline'],
+  ['28.jpg', 'Finished exterior beside a pool'],
+  ['1.jpg', 'Home exterior with siding and windows'],
+  ['2.jpg', 'Side elevation of a completed home'],
+  ['3.jpg', 'Finished siding and gutter detail'],
+].map(([file, alt]) => ({ src: `${base}${file}`, alt }));
+const upperPhotos = ['20.jpg', '21.jpg', '22.jpg', '24.jpg'].map((file) => `${base}${file}`);
+const lowerPhotos = ['25.jpg', '26.jpg', '27.jpg', '28.jpg'].map((file) => `${base}${file}`);
+const blurDataURL = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSI4Ij48cmVjdCB3aWR0aD0iMTAiIGhlaWdodD0iOCIgZmlsbD0iI2VlZjJmYiIvPjwvc3ZnPg==';
 
-const AUTOPLAY_MS = 5000;
-const PRELOAD_WINDOW = 1;
-const ROW_HEIGHT = 560;
+function PhotoTile({ photos, label }: { photos: string[]; label: string }) {
+  const [index, setIndex] = useState(0);
+  const current = photos[index];
+  const change = (direction: number) => setIndex((value) => (value + direction + photos.length) % photos.length);
 
-function useMediaQuery(query: string, serverValue: boolean): boolean {
-    const subscribe = useCallback((onChange: () => void) => {
-        const media = window.matchMedia(query);
-        media.addEventListener('change', onChange);
-        return () => media.removeEventListener('change', onChange);
-    }, [query]);
-    const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query]);
-    const getServerSnapshot = useCallback(() => serverValue, [serverValue]);
-    return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return (
+    <div className="group relative h-full min-h-0 overflow-hidden rounded-xl bg-secondary" aria-label={`${label} photo gallery`}>
+      <Image key={current} src={current} alt={`${label}, photo ${index + 1} of ${photos.length}`} fill sizes="(max-width: 767px) 100vw, 50vw" placeholder="blur" blurDataURL={blurDataURL} className="object-cover" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/45 to-transparent" />
+      <div className="absolute inset-x-4 bottom-3 flex gap-1" aria-hidden="true">
+        {photos.map((photo, position) => <span key={photo} className={`h-[3px] flex-1 rounded-full ${position === index ? 'bg-white' : 'bg-white/40'}`} />)}
+      </div>
+      <span className="sr-only" aria-live="polite">Photo {index + 1} of {photos.length}</span>
+      <button type="button" onClick={() => change(-1)} aria-label="Previous photo" className="absolute left-3 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-foreground opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 max-md:opacity-100 focus-visible:opacity-100"><ChevronLeft className="size-5" /></button>
+      <button type="button" onClick={() => change(1)} aria-label="Next photo" className="absolute right-3 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-foreground opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 max-md:opacity-100 focus-visible:opacity-100"><ChevronRight className="size-5" /></button>
+    </div>
+  );
 }
 
-function useReducedMotion(): boolean {
-    return useMediaQuery('(prefers-reduced-motion: reduce)', false);
-}
-
-function useHoverCapable(): boolean {
-    return useMediaQuery('(hover: hover) and (pointer: fine)', true);
-}
-
-interface VideoSlideProps {
-    src: string;
-    isActive: boolean;
-    playing: boolean;
-    inView: boolean;
-    singleVideo: boolean;
-    onEnded: () => void;
-    onLoadedMeta: (w: number, h: number, durationMs: number) => void;
-    preload: 'auto' | 'metadata' | 'none';
-}
-
-function VideoSlide({ src, isActive, playing, inView, singleVideo, onEnded, onLoadedMeta, preload }: VideoSlideProps) {
-    const ref = useRef<HTMLVideoElement | null>(null);
-    const wantsPlayRef = useRef(false);
-
-    const attemptPlay = useCallback(() => {
-        const el = ref.current;
-        if (!el) return;
-        const p = el.play();
-        if (p && typeof p.catch === 'function') {
-            p.catch(() => { });
-        }
-    }, []);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        wantsPlayRef.current = isActive && playing && inView;
-        if (wantsPlayRef.current) {
-            attemptPlay();
-        } else {
-            el.pause();
-            if (!isActive) {
-                try {
-                    el.currentTime = 0;
-                } catch { }
-            }
-        }
-    }, [isActive, playing, inView, attemptPlay]);
-
-    return (
-        <video
-            ref={ref}
-            className="showcase-media"
-            src={src}
-            muted
-            loop={singleVideo}
-            playsInline
-            autoPlay={isActive && playing && inView}
-            preload={preload}
-            onLoadedMetadata={(e) => {
-                const v = e.currentTarget;
-                onLoadedMeta(v.videoWidth, v.videoHeight, v.duration * 1000);
-            }}
-            onCanPlay={() => {
-                if (wantsPlayRef.current) attemptPlay();
-            }}
-            onEnded={() => {
-                if (!singleVideo) onEnded();
-            }}
-        />
-    );
-}
-
-interface CellProps {
-    category: CategoryConfig;
-    size: 'lg' | 'sm';
-    onRatio?: (ratio: number) => void;
-}
-
-function Cell({ category, size, onRatio }: CellProps) {
-    const [index, setIndex] = useState(0);
-    const [playing, setPlaying] = useState(true);
-    const [inView, setInView] = useState(true);
-    const [segmentKey, setSegmentKey] = useState(0);
-    const [videoDurationMs, setVideoDurationMs] = useState(AUTOPLAY_MS);
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const reducedMotion = useReducedMotion();
-    const hoverCapable = useHoverCapable();
-
-    const files = category.files;
-    const total = files.length;
-    const isVideo = category.kind === 'video';
-    const singleVideo = isVideo && total <= 1;
-    const segmentDurationMs = isVideo ? videoDurationMs : AUTOPLAY_MS;
-
-    useEffect(() => {
-        const node = containerRef.current;
-        if (!node) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => setInView(entry.isIntersecting),
-            { threshold: 0.3 }
-        );
-        observer.observe(node);
-        const onVisibility = () => setInView(!document.hidden);
-        document.addEventListener('visibilitychange', onVisibility);
-        return () => {
-            observer.disconnect();
-            document.removeEventListener('visibilitychange', onVisibility);
-        };
-    }, []);
-
-    const goTo = useCallback(
-        (next: number) => {
-            if (total === 0) return;
-            setIndex(((next % total) + total) % total);
-            setSegmentKey((k) => k + 1);
-        },
-        [total]
-    );
-    const next = useCallback(() => goTo(index + 1), [goTo, index]);
-    const prev = useCallback(() => goTo(index - 1), [goTo, index]);
-
-    useEffect(() => {
-        if (timerRef.current) clearInterval(timerRef.current);
-        if (!playing || !inView || reducedMotion || total <= 1 || isVideo) {
-            return;
-        }
-        timerRef.current = setInterval(() => {
-            setIndex((i) => (i + 1) % total);
-            setSegmentKey((k) => k + 1);
-        }, AUTOPLAY_MS);
-        return () => {
-            if (timerRef.current) clearInterval(timerRef.current);
-        };
-    }, [playing, inView, reducedMotion, total, isVideo, index]);
-
-    const visibleSlides = useMemo(() => {
-        if (total === 0) return [];
-        const set: { i: number; offset: number; file: string }[] = [];
-        for (let offset = -PRELOAD_WINDOW; offset <= PRELOAD_WINDOW; offset++) {
-            const i = (((index + offset) % total) + total) % total;
-            set.push({ i, offset, file: files[i] });
-        }
-        return set;
-    }, [index, total, files]);
-
-    const reportRatio = useCallback(
-        (w: number, h: number) => {
-            if (!onRatio || !w || !h) return;
-            onRatio(w / h);
-        },
-        [onRatio]
-    );
-
-    if (total === 0) {
-        return (
-            <div className={`showcase-cell showcase-cell-${size} showcase-empty`}>
-                <p>No {category.label.toLowerCase()} assets configured.</p>
-            </div>
-        );
-    }
-
-    const barPlayState = playing && inView && !reducedMotion ? 'running' : 'paused';
-
-    const fillStyle = (active: boolean): CSSProperties =>
-        active
-            ? {
-                width: '100%',
-                animationName: 'showcase-fill',
-                animationDuration: `${segmentDurationMs}ms`,
-                animationTimingFunction: 'linear',
-                animationFillMode: 'forwards',
-                animationPlayState: barPlayState,
-            }
-            : { width: '0%' };
-
-    return (
-        <div
-            ref={containerRef}
-            className={`showcase-cell showcase-cell-${size}`}
-            role="region"
-            aria-roledescription="carousel"
-            aria-label={`${category.label} slideshow`}
-            tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === 'ArrowRight') next();
-                if (e.key === 'ArrowLeft') prev();
-                if (e.key === ' ') {
-                    e.preventDefault();
-                    setPlaying((p) => !p);
-                }
-            }}
-            onMouseEnter={() => {
-                if (!hoverCapable) return;
-                if (!isVideo) setPlaying(false);
-            }}
-            onMouseLeave={() => hoverCapable && setPlaying(true)}
-        >
-            {total > 1 && (
-                <div className="showcase-progress" role="tablist" aria-label={`${category.label} slides`}>
-                    {total <= 8 ? (
-                        files.map((_, i) => (
-                            <button
-                                key={i}
-                                type="button"
-                                className="showcase-progress-seg"
-                                role="tab"
-                                aria-selected={i === index}
-                                aria-label={`Go to slide ${i + 1} of ${total}`}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    goTo(i);
-                                }}
-                            >
-                                <span
-                                    className="showcase-progress-fill"
-                                    key={i === index ? `${segmentKey}-${i}` : i}
-                                    style={i < index ? { width: '100%' } : fillStyle(i === index)}
-                                />
-                            </button>
-                        ))
-                    ) : (
-                        <div className="showcase-progress-seg" aria-hidden="true" style={{ flex: 1 }}>
-                            <span
-                                className="showcase-progress-fill"
-                                style={{ width: `${((index + 1) / total) * 100}%`, transition: 'width 420ms ease' }}
-                            />
-                        </div>
-                    )}
-                </div>
-            )}
-
-            {total > 1 && (
-                <>
-                    <button
-                        type="button"
-                        className="showcase-nav showcase-nav-prev"
-                        aria-label="Previous slide"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            prev();
-                        }}
-                    >
-                        ‹
-                    </button>
-                    <button
-                        type="button"
-                        className="showcase-nav showcase-nav-next"
-                        aria-label="Next slide"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            next();
-                        }}
-                    >
-                        ›
-                    </button>
-                </>
-            )}
-
-            <div className="showcase-track">
-                {visibleSlides.map(({ offset, file, i }) => {
-                    const isActive = offset === 0;
-                    // category.basePath may be '' for the merged/virtual
-                    // image categories built below — in that case `file`
-                    // is already a fully-resolved src, so assetUrl just
-                    // returns it unchanged.
-                    const src = assetUrl(category, file);
-                    // Stable key = file identity, NOT offset, so React
-                    // keeps the same DOM node across index changes — this
-                    // is what makes the crossfade actually animate instead
-                    // of popping (remounting on offset change kills CSS
-                    // transitions since there's no "from" state).
-                    const key = total <= 2 ? `${category.id}-${file}-${offset}` : `${category.id}-${file}`;
-                    const wrapClass = `showcase-media-wrap${isActive ? ' is-active' : ''}`;
-
-                    if (isVideo) {
-                        return (
-                            <div key={key} className={wrapClass}>
-                                <VideoSlide
-                                    src={src}
-                                    isActive={isActive}
-                                    playing={playing}
-                                    inView={inView}
-                                    singleVideo={singleVideo}
-                                    preload={isActive ? 'auto' : 'metadata'}
-                                    onEnded={next}
-                                    onLoadedMeta={(w, h, durationMs) => {
-                                        if (isActive) {
-                                            reportRatio(w, h);
-                                            if (durationMs && Number.isFinite(durationMs)) {
-                                                setVideoDurationMs(durationMs);
-                                            }
-                                        }
-                                    }}
-                                />
-                            </div>
-                        );
-                    }
-
-                    return (
-                        <div key={key} className={wrapClass}>
-                            <img
-                                className="showcase-media"
-                                src={src}
-                                alt=""
-                                loading={isActive ? 'eager' : 'lazy'}
-                                decoding="async"
-                                fetchPriority={isActive ? 'high' : 'low'}
-                                onLoad={(e) => {
-                                    if (isActive) {
-                                        const img = e.currentTarget;
-                                        reportRatio(img.naturalWidth, img.naturalHeight);
-                                    }
-                                }}
-                            />
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-/* ============================================================================
-   Main export
-   - Left: the video category, taking a natural ~50% share of the row
-     (flex: 1 1 50%) instead of a pixel width clamped to its own aspect
-     ratio.
-   - Right: exactly ONE column, split into exactly TWO cells (50/50
-     height), fed from a single shuffled pool of every image category
-     combined — a genuinely random mix, not one category per row.
-   ============================================================================ */
 export default function ProjectShowcase() {
-    const featured = CATEGORIES.find((c) => c.id === 'recentSeptember2026') ?? CATEGORIES[0];
-    const walkthroughs = CATEGORIES.find((c) => c.kind === 'video') ?? featured;
+  return (
+    <section className="bg-background py-16 md:py-20" aria-labelledby="projects-heading">
+      <div className="mx-auto mb-8 max-w-[1200px] px-6 text-center">
+        <h2 id="projects-heading" className="text-4xl font-medium tracking-tight text-foreground">Projects</h2>
+        <p className="mx-auto mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">Recent siding and exterior projects, with roofing, gutters, windows, and doors handled with care.</p>
+      </div>
 
-    const mixA = useMemo(() => {
-        const imageCategories = CATEGORIES.filter((c) => c.kind === 'image' && c.id !== featured.id);
-        const pool = imageCategories.flatMap((cat) =>
-            cat.files.map((file) => assetUrl(cat, file))
-        );
-        return {
-            id: 'projectHighlights',
-            label: 'Featured Projects',
-            kind: 'image',
-            basePath: '',
-            files: pool,
-        } satisfies CategoryConfig;
-    }, [featured.id]);
+      <InfiniteCurvedCarousel items={carouselPhotos} durationSeconds={70} />
 
-    return (
-        <section className="showcase-root bg-slate-100 mt-10" style={TOKENS}>
-            <style>{`
-        .showcase-root {
-          padding: var(--space-8) var(--space-5);
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          color: var(--ink);
-        }
-
-        .showcase-grid {
-          max-width: 1180px;
-          margin: 0 auto;
-          display: flex;
-          gap: var(--space-3);
-          height: ${ROW_HEIGHT}px;
-        }
-        .showcase-cell-lg-wrap {
-          position: relative;
-          flex: 1 1 50%;
-          min-width: 0;
-          height: 100%;
-        }
-        .showcase-cell-lg-wrap .showcase-cell {
-          height: 100%;
-        }
-        .showcase-cell-rest {
-          flex: 1 1 50%;
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          gap: var(--space-3);
-        }
-        .showcase-cell-rest .showcase-cell-sm {
-          flex: 1 1 0;
-          min-height: 0;
-        }
-        .showcase-cell {
-          position: relative;
-          border-radius: var(--radius-md);
-          overflow: hidden;
-          background: var(--navy-950);
-          box-shadow: 0 16px 32px -20px rgba(11, 31, 58, 0.35);
-          transition: transform 450ms cubic-bezier(.22,1,.36,1), box-shadow 450ms cubic-bezier(.22,1,.36,1);
-        }
-        .showcase-cell:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 20px 42px -22px rgba(11, 31, 58, 0.38);
-        }
-        .showcase-recent-label {
-          position: absolute;
-          bottom: 16px;
-          left: 16px;
-          z-index: 5;
-          padding: 8px 12px;
-          border-radius: 999px;
-          background: rgba(255,255,255,.92);
-          color: var(--navy-950);
-          font-size: 12px;
-          font-weight: 600;
-          letter-spacing: .03em;
-          box-shadow: 0 4px 18px rgba(11,31,58,.12);
-        }
-        .showcase-empty {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--slate-400);
-          font-size: 13px;
-          background: var(--slate-100);
-        }
-        .showcase-track {
-          position: relative;
-          width: 100%;
-          height: 100%;
-        }
-
-        .showcase-media-wrap {
-          position: absolute;
-          inset: 0;
-          opacity: 0;
-          transform: scale(1.035) translateY(5px);
-          transition: opacity 650ms cubic-bezier(.22,1,.36,1), transform 800ms cubic-bezier(.22,1,.36,1);
-          z-index: 1;
-          pointer-events: none;
-        }
-        .showcase-media-wrap.is-active {
-          opacity: 1;
-          transform: scale(1);
-          z-index: 2;
-          pointer-events: auto;
-        }
-        .showcase-media {
-          position: relative;
-          z-index: 1;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-          display: block;
-        }
-        .showcase-cell:focus-visible {
-          outline: 2px solid var(--accent);
-          outline-offset: 2px;
-        }
-
-        .showcase-progress {
-          position: absolute;
-          top: var(--space-3);
-          left: var(--space-3);
-          right: var(--space-3);
-          z-index: 4;
-          display: flex;
-          gap: 4px;
-        }
-        .showcase-progress-seg {
-          flex: 1;
-          height: 3px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.3);
-          border: none;
-          padding: 0;
-          cursor: pointer;
-          overflow: hidden;
-          position: relative;
-        }
-        .showcase-progress-fill {
-          position: absolute;
-          inset: 0;
-          width: 0%;
-          background: var(--white);
-          border-radius: 999px;
-          display: block;
-        }
-        @keyframes showcase-fill {
-          from { width: 0%; }
-          to { width: 100%; }
-        }
-
-        .showcase-nav {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 4;
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          border: none;
-          background: rgba(11, 31, 58, 0.45);
-          color: var(--white);
-          font-size: 18px;
-          line-height: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 160ms ease, background 160ms ease;
-        }
-        .showcase-nav:hover {
-          background: rgba(11, 31, 58, 0.7);
-        }
-        .showcase-cell:hover .showcase-nav,
-        .showcase-cell:focus-within .showcase-nav {
-          opacity: 1;
-        }
-        .showcase-nav-prev { left: var(--space-2); }
-        .showcase-nav-next { right: var(--space-2); }
-
-        @media (hover: none) {
-          .showcase-nav { opacity: 0.85; }
-        }
-
-        .showcase-cta-wrap {
-          max-width: 1180px;
-          margin: var(--space-6) auto 0;
-          display: flex;
-          justify-content: center;
-        }
-        .showcase-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: var(--space-2);
-          background: var(--navy-950);
-          color: var(--white);
-          font-size: 14px;
-          font-weight: 400;
-          letter-spacing: 0.02em;
-          text-decoration: none;
-          padding: 14px 28px;
-          border-radius: 999px;
-          transition: background 180ms ease, transform 180ms ease;
-        }
-        .showcase-cta:hover {
-          background: var(--accent);
-          transform: translateY(-1px);
-        }
-
-        @media (max-width: 860px) {
-          .showcase-grid {
-            flex-direction: column;
-            height: auto;
-          }
-          .showcase-cell-lg-wrap {
-            flex-basis: auto;
-            height: 300px;
-          }
-          .showcase-cell-rest {
-            flex-direction: column;
-          }
-          .showcase-cell-rest .showcase-cell-sm {
-            flex: none;
-            height: 220px;
-          }
-        }
-        @media (max-width: 640px) {
-          .showcase-title { font-size: 24px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .showcase-cell, .showcase-media-wrap { transition-duration: 0.01ms; }
-          .showcase-cell:hover { transform: none; }
-        }
-      `}</style>
-            <div className=" mt-10 bg-slate-100">
-                <div className='flex flex-col gap-4 justify-center items-center mx-auto'>
-                    <p className="font-medium text-4xl  text-center mx-auto tracking-tight font-sans">Projects</p>
-                    <p className="font-normal text-2xl text-center mx-auto tracking-tight">Recent siding and exterior projects, with roofing, gutters, windows, and doors handled with care.</p>
-                </div>
-            </div>
-            <InfiniteCurvedCarousel
-                items={CATEGORIES.filter((c) => c.kind === 'image').flatMap((cat) =>
-                    cat.files.map((file) => ({ src: assetUrl(cat, file) }))
-                )}
-                durationSeconds={650}
-                surroundColor="#F5F7FA"
-                cropZoom={1.15}
-            />
-            <div className="showcase-grid">
-                <div className="showcase-cell-lg-wrap">
-                    <Cell category={featured} size="lg" />
-                    <span className="showcase-recent-label">Recent Project · September 2026</span>
-                </div>
-                <div className="showcase-cell-rest">
-                    <Cell category={walkthroughs} size="sm" />
-                    <Cell category={mixA} size="sm" />
-                </div>
-            </div>
-
-            <div className="showcase-cta-wrap">
-                <a href="/projects" className="showcase-cta tracking-tight font-light">
-                    View All Projects →
-                </a>
-            </div>
-        </section>
-    );
+      <div className="mx-auto mt-10 max-w-[1200px] px-6">
+        <div className="grid h-[560px] grid-cols-2 grid-rows-2 gap-4 max-md:h-auto max-md:grid-cols-1 max-md:grid-rows-none">
+          <div className="relative row-span-2 overflow-hidden rounded-xl bg-secondary max-md:row-span-1 max-md:aspect-[4/3]">
+            <Image src={`${base}23.jpg`} alt="Completed FourFront siding project" fill sizes="(max-width: 767px) 100vw, 50vw" placeholder="blur" blurDataURL={blurDataURL} className="object-cover" />
+          </div>
+          <div className="max-md:aspect-[4/3]"><PhotoTile photos={upperPhotos} label="Exterior project" /></div>
+          <div className="max-md:aspect-[4/3]"><PhotoTile photos={lowerPhotos} label="Siding installation" /></div>
+        </div>
+        <p className="mt-4 inline-flex rounded-full border border-border bg-white px-4 py-2 text-[13px] font-medium text-foreground">Recent Project · September 2026</p>
+        <div className="mt-8 text-center">
+          <a href="/projects" className="inline-flex items-center rounded-full bg-[#0B1F3A] px-7 py-3.5 text-sm font-medium text-white transition-[background,transform] hover:-translate-y-0.5 hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">View All Projects →</a>
+        </div>
+      </div>
+    </section>
+  );
 }

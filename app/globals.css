@@ -34,6 +34,7 @@
 }
 
 :root {
+  --header-h: 64px;
   --white: #ffffff;
   --bg: #F5F7FA;
   --bg-alt: #EEF2FB;
@@ -45,6 +46,12 @@
   --muted: #6B7A99;
   --text: #0F1C3F;
   --radius: 0.5rem;
+}
+
+section[id] { scroll-margin-top: 80px; }
+
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .process-card { position: static !important; top: auto !important; }
 }
 
 body {

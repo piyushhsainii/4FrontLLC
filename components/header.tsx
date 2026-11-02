@@ -1,19 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-function scrollTo(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 const navLinks = [
   { label: 'Services', id: 'services' },
@@ -24,82 +14,42 @@ const navLinks = [
 ];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver((entries) => {
+      const current = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (current) setActive(current.target.id);
+    }, { rootMargin: '-80px 0px -55% 0px', threshold: [0, 0.1, 0.5] });
+    navLinks.forEach(({ id }) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
   }, []);
 
-  const handleNav = (id: string) => {
-    setIsMobileMenuOpen(false);
-    // Small delay lets the mobile menu close before scrolling
-    setTimeout(() => scrollTo(id), 10);
-  };
-
   return (
-    <header
-      className={cn(
-        'fixed left-0 right-0 top-0 z-50 transition-all duration-300',
-        'bg-background/80 py-3 shadow-sm backdrop-blur-md'
-      )}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 xl:px-0 text-foreground">
-        <Link href="/" className="flex flex-col group">
-          <img src="/LLC_LOGO.png" className="h-18 w-auto" alt="" />
+    <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-border bg-white/90 backdrop-blur-[12px]">
+      <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
+        <Link href="/" aria-label="FourFront home" className="flex h-11 items-center rounded-sm">
+          <Image src="/LLC_LOGO.png" alt="FourFront" width={120} height={52} priority className="h-12 w-auto object-contain" />
         </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Main navigation" className="hidden items-center gap-3 md:flex">
           {navLinks.map(({ label, id }) => (
-            <button
-              key={id}
-              onClick={() => handleNav(id)}
-              className="text-sm font-medium hover:cursor-pointer hover:text-primary transition-colors"
-            >
-              {label}
-            </button>
+            <Link key={id} href={`/#${id}`} aria-current={active === id ? 'location' : undefined} className="flex min-h-11 items-center rounded-md px-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary focus-visible:bg-secondary aria-[current=location]:text-primary">{label}</Link>
           ))}
-          <button
-            onClick={() => handleNav('contact')}
-            className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-accent-foreground transition-all hover:bg-accent/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-          >
-            Call Now
-          </button>
+          <Link href="/#contact" className="ml-2 flex min-h-11 items-center rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent/90">Call Now</Link>
         </nav>
-
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <button type="button" className="flex size-11 items-center justify-center rounded-md md:hidden" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen((value) => !value)}>
+          {open ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
       </div>
-
-      {/* Mobile Nav */}
-      {isMobileMenuOpen && (
-        <div className="absolute left-0 right-0 top-full bg-background border-b border-border p-6 shadow-xl md:hidden">
-          <div className="flex flex-col gap-4">
-            {navLinks.map(({ label, id }) => (
-              <button
-                key={id}
-                onClick={() => handleNav(id)}
-                className="text-left text-lg font-medium hover:text-primary transition-colors"
-              >
-                {label}
-              </button>
-            ))}
-            <button
-              onClick={() => handleNav('contact')}
-              className="mt-4 rounded-full bg-accent px-6 py-3 text-center text-sm font-medium text-accent-foreground"
-            >
-              Call Now
-            </button>
-          </div>
-        </div>
+      {open && (
+        <nav id="mobile-navigation" aria-label="Mobile navigation" className="border-b border-border bg-white/95 px-6 py-3 shadow-sm md:hidden">
+          {navLinks.map(({ label, id }) => <Link key={id} href={`/#${id}`} onClick={() => setOpen(false)} aria-current={active === id ? 'location' : undefined} className="flex min-h-11 items-center rounded-md px-3 text-sm font-medium text-foreground hover:bg-secondary focus-visible:bg-secondary">{label}</Link>)}
+          <Link href="/#contact" onClick={() => setOpen(false)} className="mt-2 flex min-h-11 items-center justify-center rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground">Call Now</Link>
+        </nav>
       )}
     </header>
   );

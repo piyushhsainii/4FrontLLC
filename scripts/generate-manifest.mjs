@@ -144,6 +144,10 @@ function scanFolder(dir, extensions) {
 
       if (!extensions.includes(extname(name).toLowerCase())) return false;
 
+      // Root media uses numbered filenames for project photos. Keep logos,
+      // portraits, service artwork, and other site assets out of the gallery.
+      if (!dir && !/^\d+\.(?:jpe?g|png|webp|mp4)$/i.test(name)) return false;
+
       if (isExcludedFile(name)) {
         excludedSkipped.push(name);
         return false;

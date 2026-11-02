@@ -94,7 +94,7 @@ export function MapFooter() {
                         <Link href="/" style={{ display: 'inline-block', marginBottom: 18, textDecoration: 'none' }}>
                             <Image
                                 src="/LLC_LOGO.png"
-                                alt="4Front Construction and Logistics Services"
+                                alt="FourFront Construction and Logistics Services"
                                 width={160}
                                 height={80}
                                 style={{ objectFit: 'contain', display: 'block' }}
@@ -202,7 +202,7 @@ export function MapFooter() {
                         }} />
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: 13, fontWeight: 600, color: T.navy, marginBottom: 4 }}>Loading Map</div>
-                            <div style={{ fontSize: 11.5, color: T.muted, letterSpacing: '0.3px' }}>Fourfront Construction</div>
+                            <div style={{ fontSize: 11.5, color: T.muted, letterSpacing: '0.3px' }}>FourFront Construction</div>
                         </div>
                         <div style={{ display: 'flex', gap: 6 }}>
                             {[0, 1, 2].map((i) => (
@@ -233,7 +233,7 @@ export function MapFooter() {
                                 animation: 'mapPulse 2s ease-in-out infinite',
                             }} />
                             <span style={{ fontSize: 11.5, fontWeight: 600, color: T.navy, letterSpacing: '0.3px' }}>
-                                Fourfront Construction
+                                FourFront Construction
                             </span>
                         </div>
                     )}
@@ -249,7 +249,7 @@ export function MapFooter() {
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title="Fourfront Construction Location"
+                        title="FourFront Construction Location"
                         onLoad={handleMapLoad}
                     />
                 </div>
@@ -329,7 +329,7 @@ export function MapFooter() {
                         flexWrap: 'wrap', gap: 14,
                     }}>
                         <p style={{ fontSize: 12, color: T.mutedLight, margin: 0 }}>
-                            &copy; {currentYear} 4Front Construction and Logistics Services. All rights reserved.
+                            &copy; {currentYear} FourFront Construction and Logistics Services. All rights reserved.
                         </p>
                         <div style={{
                             display: 'flex', alignItems: 'center', gap: 7,

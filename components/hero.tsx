@@ -23,7 +23,7 @@ export function Hero() {
         </h1>
 
         <p className="mx-auto w-full mb-10 max-w-[800px] text-balance text-base md:text-lg lg:text-xl">
-          4Front Construction and Logistics Services helps homeowners with siding,
+          FourFront Construction and Logistics Services helps homeowners with siding,
           gutters, windows, doors, and roofing — from planned upgrades to storm repairs —
           with clarity and craftsmanship.
         </p>
